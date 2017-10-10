@@ -1,7 +1,8 @@
 const config = require('../config');
 const {Strategy, Issuer} = require('openid-client');
+const logger = require('./../logger');
 
-module.exports.getPassportStrategy = async (logger) => {
+const getPassportStrategy = async () => {
   const issuer = await Issuer.discover(config.identifyingParty.url);
 
   const client = new issuer.Client({
@@ -31,3 +32,6 @@ module.exports.getPassportStrategy = async (logger) => {
 
   });
 };
+
+
+module.exports = getPassportStrategy;

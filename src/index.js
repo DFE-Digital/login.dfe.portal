@@ -4,20 +4,14 @@ const express = require('express');
 const passport = require('passport');
 const session = require('express-session');
 const morgan = require('morgan');
-const winston = require('winston');
 const config = require('./config');
 const {getPassportStrategy} = require('./oidc');
-
-const logger = new (winston.Logger)({
-  colors: config.loggerSettings.colors,
-  transports: [
-    new (winston.transports.Console)({level: 'info', colorize: true}),
-  ],
-});
+const logger = require('./logger');
 
 init = async () => {
 
-  passport.use('oidc', await getPassportStrategy(logger));
+  // setup passport middleware
+  passport.use('oidc', await getPassportStrategy());
   passport.serializeUser(function (user, done) {
     done(null, user);
   });
@@ -26,15 +20,22 @@ init = async () => {
   });
 
   const app = express();
+  // setup access logging (Morgan)
   app.use(morgan('combined', {stream: fs.createWriteStream('./access.log', {flags: 'a'})}));
   app.use(morgan('dev'));
+
+  // Setup session params
   app.use(session({
     resave: true,
     saveUninitialized: true,
     secret: config.hostingEnvironment.sessionSecret
   }));
+
+  // use middleware
   app.use(passport.initialize());
   app.use(passport.session());
+
+  // ejs settings
   app.set('view engine', 'ejs');
   app.set('views', path.resolve(__dirname, 'views'));
 
@@ -46,11 +47,12 @@ init = async () => {
     });
   });
 
+  // auth callbacks
   app.get('/auth', passport.authenticate('oidc'));
   app.get('/auth/cb', passport.authenticate('oidc', { successRedirect: '/', failureRedirect: '/auth' }));
 
   // Setup server
-  if (config.hostingEnvironment.env == 'dev') {
+  if (config.hostingEnvironment.env === 'dev') {
     app.proxy = true;
 
     const https = require('https');
