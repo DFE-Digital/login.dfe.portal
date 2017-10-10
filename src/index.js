@@ -2,14 +2,17 @@ const path = require('path');
 const fs = require('fs');
 const express = require('express');
 const passport = require('passport');
+const expressLayouts = require('express-ejs-layouts');
+const bodyParser = require('body-parser');
 const session = require('express-session');
 const morgan = require('morgan');
+const csurf = require('csurf');
 const config = require('./config');
-const {getPassportStrategy} = require('./oidc');
+const getPassportStrategy = require('./oidc');
 const logger = require('./logger');
+const devRoutes = require('./app/devLauncher');
 
 init = async () => {
-
   // setup passport middleware
   passport.use('oidc', await getPassportStrategy());
   passport.serializeUser(function (user, done) {
@@ -18,7 +21,7 @@ init = async () => {
   passport.deserializeUser(function (user, done) {
     done(null, user);
   });
-
+  const csrf = csurf({ cookie: true });
   const app = express();
   // setup access logging (Morgan)
   app.use(morgan('combined', {stream: fs.createWriteStream('./access.log', {flags: 'a'})}));
@@ -32,20 +35,18 @@ init = async () => {
   }));
 
   // use middleware
+  app.use(bodyParser.urlencoded({ extended: true }));
   app.use(passport.initialize());
   app.use(passport.session());
+  app.use(expressLayouts);
 
   // ejs settings
   app.set('view engine', 'ejs');
   app.set('views', path.resolve(__dirname, 'views'));
+  app.set('layout', 'layouts/layout');
 
   // Setup routes
-  app.get('/', (req, res) => {
-    res.render('index', {
-      isLoggedIn: req.isAuthenticated(),
-      user: req.user ? req.user : {id: '', name: ''}
-    });
-  });
+  app.use(devRoutes(csrf));
 
   // auth callbacks
   app.get('/auth', passport.authenticate('oidc'));

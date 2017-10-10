@@ -21,8 +21,10 @@
   },
   "homepage": "https://github.com/DFE-Digital/login.dfe.portal#readme",
   "dependencies": {
+    "csurf": "^1.9.0",
     "ejs": "^2.5.7",
     "express": "^4.16.1",
+    "express-ejs-layouts": "^2.3.1",
     "express-session": "^1.15.6",
     "morgan": "^1.9.0",
     "openid-client": "^1.15.0",
