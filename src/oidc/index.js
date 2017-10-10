@@ -1,4 +1,4 @@
-const config = require('./../Config');
+const config = require('../config');
 const {Strategy, Issuer} = require('openid-client');
 
 module.exports.getPassportStrategy = async (logger) => {

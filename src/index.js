@@ -5,8 +5,8 @@ const passport = require('passport');
 const session = require('express-session');
 const morgan = require('morgan');
 const winston = require('winston');
-const config = require('./Config');
-const {getPassportStrategy} = require('./Oidc');
+const config = require('./config');
+const {getPassportStrategy} = require('./oidc');
 
 const logger = new (winston.Logger)({
   colors: config.loggerSettings.colors,
