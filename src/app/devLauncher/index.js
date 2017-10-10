@@ -13,6 +13,7 @@ module.exports = (csrf) => {
   router.get('/', isLoggedIn, (req, res) => {
     res.render('devLauncher/launchpad', {
       uuid: uuid(),
+      user: req.user
     });
   });
 
