@@ -1,0 +1,32 @@
+{
+  "name": "login.dfe.examples.portal",
+  "version": "0.0.1",
+  "description": "Portal application for login.dfe",
+  "engines": {
+    "node": "8.x.x"
+  },
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "dev": "settings='./config/login.dfe.portal.dev.json' node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DFE-Digital/login.dfe.portal;.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DFE-Digital/login.dfe.portal/issues"
+  },
+  "homepage": "https://github.com/DFE-Digital/login.dfe.portal#readme",
+  "dependencies": {
+    "ejs": "^2.5.7",
+    "express": "^4.16.1",
+    "express-session": "^1.15.6",
+    "morgan": "^1.9.0",
+    "openid-client": "^1.15.0",
+    "passport": "^0.4.0",
+    "winston": "^2.3.1"
+  }
+}

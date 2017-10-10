@@ -57,3 +57,9 @@ typings/
 # dotenv environment variables file
 .env
 
+
+#config
+/config/
+!/config/login.dfe.portal.dev.json
+
+.idea
