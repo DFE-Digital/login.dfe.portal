@@ -59,7 +59,7 @@ typings/
 
 
 #config
-/config/
-!/config/login.dfe.portal.dev.json
+#/config/
+#!/config/login.dfe.portal.dev.json
 
 .idea
