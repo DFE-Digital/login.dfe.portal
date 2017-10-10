@@ -2,6 +2,7 @@
 
 const express = require('express');
 const uuid = require('uuid/v4');
+const {isLoggedIn} = require('./../../utils');
 const logger = require('../../logger');
 
 const router = express.Router({ mergeParams: true });
@@ -9,10 +10,11 @@ const router = express.Router({ mergeParams: true });
 module.exports = (csrf) => {
   logger.info('Mounting dev routed');
 
-  router.get('/', (req, res) => {
-    res.render('dev/launchpad', {
+  router.get('/', isLoggedIn, (req, res) => {
+    res.render('devLauncher/launchpad', {
       uuid: uuid(),
     });
   });
+
   return router;
 };

@@ -42,11 +42,13 @@ init = async () => {
 
   // ejs settings
   app.set('view engine', 'ejs');
-  app.set('views', path.resolve(__dirname, 'views'));
+  app.set('views', path.resolve(__dirname, 'app/views'));
   app.set('layout', 'layouts/layout');
 
   // Setup routes
-  app.use(devRoutes(csrf));
+
+  if(config.hostingEnvironment.showDevViews === 'true') app.use(devRoutes(csrf));
+
 
   // auth callbacks
   app.get('/auth', passport.authenticate('oidc'));
