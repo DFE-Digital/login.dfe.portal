@@ -8,11 +8,11 @@ const {expressAppWithViews, expressAuthenticationStub} = require('./../../utils'
 
 let app;
 
-describe('INTEGRATION TEST : ', () => {
+describe('Integration tests for', () => {
   describe('DevLauncher functional area ', () => {
     beforeEach(() => {
       process.env.settings = `config/login.dfe.portal.dev.json`;
-      app = expressAppWithViews(path.resolve(__dirname, '../../../', 'src/app/'))
+      app = expressAppWithViews(path.resolve(__dirname, '../../../', 'src/app/'));
 
     });
     describe('as an authenticated user', () => {
@@ -31,7 +31,7 @@ describe('INTEGRATION TEST : ', () => {
     describe('as an unauthenticated user', () => {
       beforeEach(() => {
         process.env.settings = `config/login.dfe.portal.dev.json`;
-        app.use(expressAuthenticationStub(false, {user: {}, session:{redirectUrl: '/'}}));
+        app.use(expressAuthenticationStub(false, {user: {}, session: {redirectUrl: '/'}}));
       });
 
       it('Get / path should return status 302', async () => {

@@ -8,7 +8,7 @@ const {expressAppWithViews, expressAuthenticationStub} = require('./../../utils'
 
 let app;
 
-describe('INTEGRATION TEST : ', () => {
+describe('Integration tests for', () => {
   describe('Home functional area ', () => {
     beforeEach(() => {
       process.env.settings = `config/login.dfe.portal.dev.json`;
