@@ -3,7 +3,6 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 
-
 const expressAppWithViews = (viewPath) => {
   let app = express();
   app.use(expressLayouts);
@@ -14,16 +13,14 @@ const expressAppWithViews = (viewPath) => {
 };
 
 const expressAuthenticationStub = (authenticated, extras) => {
-  const middleware = (req, res, next) => {
+  return (req, res, next) => {
     req.isAuthenticated = () => {
       return authenticated;
     };
-    Object.assign(req, extras);
     req.user = {};
+    Object.assign(req, extras);
     next();
   };
-
-  return middleware;
 };
 
 module.exports = {
