@@ -1,9 +1,16 @@
 <div class="grid-row">
     <div class="col-12">
+        <a href="/">back</a>
         <h1 class="heading-xlarge">
             <%= locals.displayName %>
         </h1>
         <h2 class="heading-large">User Details</h2>
-        <p class="lede">User Details</p>
+        <p>First Name : <%= locals.user.given_name%></p>
+        <p>Last Name : <%= locals.user.family_name%></p>
+        <p>Email : <%= locals.user.email%></p>
+        <p class="heading-large">Profile Actions</p>
+        <p><a href="#">Change Details</a></p>
+        <p><a href="#">Change Password</a></p>
+        <p><a href="#">Delete My Account</a></p>
     </div>
 </div>

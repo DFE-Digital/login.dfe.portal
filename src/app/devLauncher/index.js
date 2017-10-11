@@ -8,7 +8,7 @@ const logger = require('../../infrastructure/logger');
 const router = express.Router({ mergeParams: true });
 
 const devLauncher = (csrf) => {
-  logger.info('Mounting dev routed');
+  logger.info('Mounting dev routes');
 
   router.get('/', isLoggedIn, (req, res) => {
     res.render('devLauncher/views/launchpad', {

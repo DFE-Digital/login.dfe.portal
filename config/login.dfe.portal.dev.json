@@ -1,10 +1,10 @@
 {
   "loggerSettings": {
-    "logLevel": "debug",
+    "logLevel": "none",
     "colors": {
-      "info": "red",
+      "info": "yellow",
       "ok": "green",
-      "error": "yellow"
+      "error": "red"
     }
   },
   "hostingEnvironment": {

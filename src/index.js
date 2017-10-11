@@ -11,6 +11,7 @@ const config = require('./infrastructure/config');
 const getPassportStrategy = require('./infrastructure/oidc');
 const logger = require('./infrastructure/logger');
 const devRoutes = require('./app/devLauncher');
+const userProfile = require('./app/profile');
 const portalHome = require('./app/home');
 const startServer = require('./server');
 init = async () => {
@@ -49,15 +50,36 @@ init = async () => {
   // Setup routes
   if(config.hostingEnvironment.showDevViews === 'true') app.use('/dev',devRoutes(csrf));
   app.use('/', portalHome(csrf));
+  app.use('/profile', userProfile(csrf));
 
   // auth callbacks
   app.get('/auth', passport.authenticate('oidc'));
-  app.get('/auth/cb', passport.authenticate('oidc', { successRedirect: '/', failureRedirect: '/auth' }));
+  app.get('/auth/cb', (req, res, next) => {
+    passport.authenticate('oidc', (err, user, info) => {
+      let redirectUrl = '/';
+
+      if (err) { return next(err); }
+      if (!user) { return res.redirect('/'); }
+
+      if (req.session.redirectUrl) {
+        redirectUrl = req.session.redirectUrl;
+        req.session.redirectUrl = null;
+      }
+      req.logIn(user, function(err){
+        if (err) { return next(err); }
+      });
+      res.redirect(redirectUrl);
+    })(req, res, next)
+  });
 
   // Start an http or https server
   startServer(app, config, logger);
+
+  return app;
 };
 
-init().catch((err => {
+const app = init().catch((err => {
   logger.error(err);
 }));
+
+module.exports = app;

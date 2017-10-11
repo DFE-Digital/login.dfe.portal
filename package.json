@@ -7,7 +7,7 @@
   },
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0",
+    "test": "./node_modules/.bin/mocha --reporter spec",
     "dev": "settings='./config/login.dfe.portal.dev.json' node src/index.js"
   },
   "repository": {
@@ -29,6 +29,22 @@
     "morgan": "^1.9.0",
     "openid-client": "^1.15.0",
     "passport": "^0.4.0",
-    "winston": "^2.3.1"
+    "winston": "^2.3.1",
+    "mocha": "latest"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb-base": "^11.3.1",
+    "eslint-plugin-import": "^2.7.0",
+    "gulp": "^3.9.0",
+    "gulp-zip": "^3.0.2",
+    "mocha": "^3.5.3",
+    "proxyquire": "^1.8.0",
+    "sinon": "^3.3.0",
+    "supertest": "^3.0.0",
+    "supertest-session": "^3.1.0",
+    "supertest": "latest",
+    "express-ejs-layouts": "latest"
   }
 }
