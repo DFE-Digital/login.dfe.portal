@@ -1,4 +1,4 @@
-# login.dfe.examples.portal
+# login.dfe.portal
 
 Providing portal features as part of the login.dfe project.
 
@@ -24,4 +24,3 @@ https://localhost:4101/
 
 ```
 **NOTE** you will need to provide correct client (clientid, etc...) details in the settings.json file (config directory) for this to work. 
-
