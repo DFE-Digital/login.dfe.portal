@@ -1,6 +1,6 @@
 {
   "loggerSettings": {
-    "logLevel": "debug",
+    "logLevel": "warn",
     "colors": {
       "info": "yellow",
       "ok": "green",
