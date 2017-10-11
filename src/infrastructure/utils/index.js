@@ -8,7 +8,7 @@ const isLoggedIn = (req, res, next) => {
 };
 
 const getUserDisplayName = (user) => {
-  return `${user.given_name} ${user.family_name}`;
+  return `${user.given_name || ''} ${user.family_name || ''}`.trim();
 };
 
 module.exports = {isLoggedIn, getUserDisplayName};

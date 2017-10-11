@@ -1,6 +1,6 @@
-const config = require('../config');
+const config = require('../config/index');
 const {Strategy, Issuer} = require('openid-client');
-const logger = require('./../logger');
+const logger = require('../logger');
 
 const getPassportStrategy = async () => {
   const issuer = await Issuer.discover(config.identifyingParty.url);
