@@ -4,20 +4,15 @@ const express = require('express');
 const uuid = require('uuid/v4');
 const {isLoggedIn} = require('../../infrastructure/utils');
 const logger = require('../../infrastructure/logger');
-
+const getIndex = require('./profile');
 const router = express.Router({ mergeParams: true });
 
-const devLauncher = (csrf) => {
-  logger.info('Mounting dev routes');
+const home = (csrf) => {
+  logger.info('Mounting home routes');
 
-  router.get('/', isLoggedIn, (req, res) => {
-    res.render('devLauncher/views/launchpad', {
-      uuid: uuid(),
-      user: req.user
-    });
-  });
+  router.get('/', isLoggedIn, getIndex);
 
   return router;
 };
 
-module.exports = devLauncher;
+module.exports = home;

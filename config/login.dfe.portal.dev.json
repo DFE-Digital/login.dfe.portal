@@ -1,10 +1,10 @@
 {
   "loggerSettings": {
-    "logLevel": "debug",
+    "logLevel": "warn",
     "colors": {
-      "info": "red",
+      "info": "yellow",
       "ok": "green",
-      "error": "yellow"
+      "error": "red"
     }
   },
   "hostingEnvironment": {
@@ -18,8 +18,8 @@
     "sessionSecret": "your-magnate-muffler-sonic"
   },
   "identifyingParty": {
-    "url": "URL HERE",
-    "clientId": "ADD CLIENT ID",
-    "clientSecret":"ADD SECRET"
+    "url": "ADD_OIDC_ROOT_URL_HERE_PLEASE",
+    "clientId": "ADD_CLIENT_ID_HERE_PLEASE",
+    "clientSecret":"ADD_CLIENT_SECRET_HERE_PLEASE"
   }
 }

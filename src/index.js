@@ -7,11 +7,13 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const morgan = require('morgan');
 const csurf = require('csurf');
-const config = require('./config');
-const getPassportStrategy = require('./oidc');
-const logger = require('./logger');
+const config = require('./infrastructure/config');
+const getPassportStrategy = require('./infrastructure/oidc');
+const logger = require('./infrastructure/logger');
 const devRoutes = require('./app/devLauncher');
-
+const userProfile = require('./app/profile');
+const portalHome = require('./app/home');
+const startServer = require('./server');
 init = async () => {
   // setup passport middleware
   passport.use('oidc', await getPassportStrategy());
@@ -42,41 +44,42 @@ init = async () => {
 
   // ejs settings
   app.set('view engine', 'ejs');
-  app.set('views', path.resolve(__dirname, 'app/views'));
+  app.set('views', path.resolve(__dirname, 'app'));
   app.set('layout', 'layouts/layout');
 
   // Setup routes
-
-  if(config.hostingEnvironment.showDevViews === 'true') app.use(devRoutes(csrf));
-
+  if(config.hostingEnvironment.showDevViews === 'true') app.use('/dev',devRoutes(csrf));
+  app.use('/', portalHome(csrf));
+  app.use('/profile', userProfile(csrf));
 
   // auth callbacks
   app.get('/auth', passport.authenticate('oidc'));
-  app.get('/auth/cb', passport.authenticate('oidc', { successRedirect: '/', failureRedirect: '/auth' }));
+  app.get('/auth/cb', (req, res, next) => {
+    passport.authenticate('oidc', (err, user, info) => {
+      let redirectUrl = '/';
 
-  // Setup server
-  if (config.hostingEnvironment.env === 'dev') {
-    app.proxy = true;
+      if (err) { return next(err); }
+      if (!user) { return res.redirect('/'); }
 
-    const https = require('https');
-    const options = {
-      key: config.hostingEnvironment.sslKey,
-      cert: config.hostingEnvironment.sslCert,
-      requestCert: false,
-      rejectUnauthorized: false
-    };
-    const server = https.createServer(options, app);
+      if (req.session.redirectUrl) {
+        redirectUrl = req.session.redirectUrl;
+        req.session.redirectUrl = null;
+      }
+      req.logIn(user, function(err){
+        if (err) { return next(err); }
+      });
+      res.redirect(redirectUrl);
+    })(req, res, next)
+  });
 
-    server.listen(config.hostingEnvironment.port, function () {
-      logger.info(`Dev server listening on https://${config.hostingEnvironment.host}:${config.hostingEnvironment.port}`);
-    })
-  } else {
-    app.listen(process.env.PORT, function() {
-      logger.info(`Dev server listening on http://${config.hostingEnvironment.host}:${process.env.PORT}`);
-    });
-  }
+  // Start an http or https server
+  startServer(app, config, logger);
+
+  return app;
 };
 
-init().catch((err => {
+const app = init().catch((err => {
   logger.error(err);
 }));
+
+module.exports = app;
