@@ -13,7 +13,9 @@ const logger = require('./infrastructure/logger');
 const devRoutes = require('./app/devLauncher');
 const userProfile = require('./app/profile');
 const portalHome = require('./app/home');
+const help = require('./app/help');
 const startServer = require('./server');
+
 init = async () => {
   // setup passport middleware
   passport.use('oidc', await getPassportStrategy());
@@ -51,6 +53,7 @@ init = async () => {
   if(config.hostingEnvironment.showDevViews === 'true') app.use('/dev',devRoutes(csrf));
   app.use('/', portalHome(csrf));
   app.use('/profile', userProfile(csrf));
+  app.use('/help', help(csrf));
 
   // auth callbacks
   app.get('/auth', passport.authenticate('oidc'));
