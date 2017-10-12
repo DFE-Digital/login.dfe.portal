@@ -1,16 +1,38 @@
+<a href="/" class="link-back">Back</a>
+
 <div class="grid-row">
-    <div class="col-12">
-        <a href="/">back</a>
+    <div class="column-two-thirds">
         <h1 class="heading-xlarge">
+            <span class="heading-secondary">
+                User profile
+            </span>
             <%= locals.displayName %>
         </h1>
-        <h2 class="heading-large">User Details</h2>
-        <p>First Name : <%= locals.user.given_name%></p>
-        <p>Last Name : <%= locals.user.family_name%></p>
-        <p>Email : <%= locals.user.email%></p>
-        <p class="heading-large">Profile Actions</p>
-        <p><a href="#">Change Details</a></p>
-        <p><a href="#">Change Password</a></p>
-        <p><a href="#">Delete My Account</a></p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-8">
+        <h2 class="heading-medium">User details</h2>
+        <dl class="inline">
+            <dt>First name</dt>
+            <dd><%= locals.user.given_name%></dd>
+            <dt>Last name</dt>
+            <dd><%= locals.user.family_name%></dd>
+            <dt>Email</dt>
+            <dd><%= locals.user.email%></dd>
+        </dl>
+    </div>
+    <div class="col-4">
+        <aside>
+            <h2 class="heading-medium">Profile actions</h2>
+            <nav class="subnav">
+                <ul>
+                    <li><a href="user-profile-edit.html">Change my details</a></li>
+                    <li><a href="password-edit.html">Change my password</a></li>
+                    <li><a href="user-profile-delete.html">Delete my account</a></li>
+                </ul>
+            </nav>
+        </aside>
     </div>
 </div>
