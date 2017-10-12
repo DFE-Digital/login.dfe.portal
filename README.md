@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/DFE-Digital/login.dfe.portal.svg?branch=master)](https://travis-ci.org/DFE-Digital/login.dfe.portal)
+
 # login.dfe.portal
 
 Providing portal features as part of the login.dfe project.
