@@ -25,15 +25,35 @@
 <div class="wrapper">
 
     <header id="global-header" class="with-proposition">
-
         <div class="header-wrapper">
-            <span style="color:white; float: right;"><%= locals.displayName %></span>
             <div class="identity">Department for Education</div>
-
         </div>
     </header>
 
-    <div id="global-header-bar"></div>
+    <div class="header-user">
+        <div class="header-inner">
+            <div class="service-info">
+                <div class="phase-banner-beta">
+                    <p>
+                        <strong class="phase-tag">BETA</strong>
+                        <span>This is a new service – your <a href="#" target="_blank">feedback</a> will help us to improve it. </span>
+                    </p>
+                </div>
+            </div>
+            <% if (locals.user !== undefined) { %>
+            <div class="account-information" role="navigation">
+                <p class="signed-in-as"><span class="vh">You are signed in as</span> <%= locals.displayName %></p>
+                <nav id="user-nav">
+                    <ul role="menubar">
+                        <li><a href="/profile" role="menuitem">Profile</a></li>
+                        <li><a href="/signout" role="menuitem">Sign out</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <% } %>
+        </div>
+    </div>
+
 
     <main id="content" tabindex="-1">
         <%-body%>
