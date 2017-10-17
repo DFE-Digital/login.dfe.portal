@@ -23,7 +23,7 @@ const callDirectoriesApi = async (resource, body) => {
     return {
       success: false,
       statusCode: e.statusCode,
-      error: e,
+      errorMessage: e.message,
     };
   }
 };
@@ -48,7 +48,13 @@ class Account {
   }
 
   async setPassword(password) {
-    return Promise.resolve(null);
+    const uid = this.claims.sub;
+    const response = await callDirectoriesApi(`${config.directories.directoryId}/user/${uid}/changepassword`, {
+      password,
+    });
+    if(!response.success) {
+      throw new Error(response.errorMessage);
+    }
   }
 }
 
