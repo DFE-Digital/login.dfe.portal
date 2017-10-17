@@ -1,4 +1,4 @@
-const config = require('../config/index');
+const config = require('../config')();
 const {Strategy, Issuer} = require('openid-client');
 const logger = require('../logger');
 
