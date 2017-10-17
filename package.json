@@ -42,13 +42,13 @@
     "eslint": "^4.8.0",
     "eslint-config-airbnb-base": "^11.3.1",
     "eslint-plugin-import": "^2.7.0",
+    "express-ejs-layouts": "latest",
     "gulp": "^3.9.0",
     "gulp-zip": "^3.0.2",
     "mocha": "^3.5.3",
     "proxyquire": "^1.8.0",
     "sinon": "^3.3.0",
     "supertest": "latest",
-    "supertest-session": "^3.1.0",
-    "express-ejs-layouts": "latest"
+    "supertest-session": "^3.1.0"
   }
 }
