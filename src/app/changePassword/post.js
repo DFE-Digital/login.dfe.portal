@@ -56,7 +56,7 @@ const action = async (req, res) => {
       csrfToken: req.csrfToken(),
       validationFailed: true,
       validationMessages: {
-        oldPassword: 'Incorrect password',
+        oldPassword: 'We don\'t recognise that password. Please check and try again.',
         newPassword: '',
         confirmPassword: '',
       },
