@@ -17,6 +17,7 @@ const userProfile = require('./app/profile');
 const changePassword = require('./app/changePassword');
 const portalHome = require('./app/home');
 const help = require('./app/help');
+const terms = require('./app/terms');
 const startServer = require('./server');
 
 init = async () => {
@@ -60,6 +61,7 @@ init = async () => {
   app.use('/profile', userProfile(csrf));
   app.use('/change-password', changePassword(csrf));
   app.use('/help', help(csrf));
+  app.use('/terms', terms(csrf));
 
   // auth callbacks
   app.get('/auth', passport.authenticate('oidc'));
