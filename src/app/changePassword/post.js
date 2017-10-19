@@ -10,16 +10,16 @@ const validate = (oldPassword, newPassword, confirmPassword) => {
   let failed = false;
 
   if (!oldPassword) {
-    messages.oldPassword = 'Must enter current password';
+    messages.oldPassword = 'Enter your current password';
     failed = true;
   }
 
   if (!newPassword) {
-    messages.newPassword = 'Must enter your new password';
+    messages.newPassword = 'Enter a new password';
     failed = true;
   }
   else if (!confirmPassword) {
-    messages.confirmPassword = 'Must enter confirm new password';
+    messages.confirmPassword = 'Passwords do not match';
     failed = true;
   }
 
@@ -44,6 +44,7 @@ const action = async (req, res) => {
     res.render('changepassword/views/change', {
       csrfToken: req.csrfToken(),
       validationFailed: true,
+        title: 'Change password',
       validationMessages: validationResult.messages,
     });
     return;
@@ -55,8 +56,9 @@ const action = async (req, res) => {
     res.render('changepassword/views/change', {
       csrfToken: req.csrfToken(),
       validationFailed: true,
+        title: 'Change password',
       validationMessages: {
-        oldPassword: 'We don\'t recognise that password. Please check and try again.',
+        oldPassword: 'We do not recognise the password you entered. Please check and try again.',
         newPassword: '',
         confirmPassword: '',
       },
