@@ -63,7 +63,7 @@ describe('when processing a users request to change password', () => {
     expect(render.mock.calls[0][1]).toMatchObject({
       validationFailed: true,
       validationMessages: {
-        oldPassword: 'Must enter current password',
+        oldPassword: 'Enter your current password',
       },
     });
   });
@@ -78,7 +78,7 @@ describe('when processing a users request to change password', () => {
     expect(render.mock.calls[0][1]).toMatchObject({
       validationFailed: true,
       validationMessages: {
-        newPassword: 'Must enter your new password',
+        newPassword: 'Enter a new password',
       },
     });
   });
@@ -93,7 +93,7 @@ describe('when processing a users request to change password', () => {
     expect(render.mock.calls[0][1]).toMatchObject({
       validationFailed: true,
       validationMessages: {
-        confirmPassword: 'Must enter confirm new password',
+        confirmPassword: 'Passwords do not match',
       },
     });
   });
@@ -124,7 +124,7 @@ describe('when processing a users request to change password', () => {
     expect(render.mock.calls[0][1]).toMatchObject({
       validationFailed: true,
       validationMessages: {
-        oldPassword: 'We don\'t recognise that password. Please check and try again.',
+        oldPassword: 'We do not recognise the password you entered. Please check and try again.',
       },
     });
   });
