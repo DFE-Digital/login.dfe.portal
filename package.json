@@ -7,7 +7,7 @@
   },
   "main": "src/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec",
+    "test": "./node_modules/.bin/mocha --reporter spec; ./node_modules/.bin/jest",
     "dev": "settings='./config/login.dfe.portal.dev.json' node src/index.js"
   },
   "repository": {
@@ -21,30 +21,41 @@
   },
   "homepage": "https://github.com/DFE-Digital/login.dfe.portal#readme",
   "dependencies": {
+    "cookie-parser": "^1.4.3",
     "csurf": "^1.9.0",
     "ejs": "^2.5.7",
     "express": "^4.16.1",
     "express-ejs-layouts": "^2.3.1",
+    "express-flash-2": "^1.0.1",
     "express-session": "^1.15.6",
+    "login.dfe.jwt-strategies": "github:DFE-Digital/login.dfe.jwt-strategies#master",
+    "mocha": "latest",
     "morgan": "^1.9.0",
     "openid-client": "^1.15.0",
     "passport": "^0.4.0",
-    "winston": "^2.3.1",
-    "mocha": "latest"
+    "request-promise": "^4.2.2",
+    "uuid": "^3.1.0",
+    "winston": "^2.3.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",
     "eslint": "^4.8.0",
     "eslint-config-airbnb-base": "^11.3.1",
     "eslint-plugin-import": "^2.7.0",
+    "express-ejs-layouts": "latest",
     "gulp": "^3.9.0",
     "gulp-zip": "^3.0.2",
+    "jest": "^21.2.1",
     "mocha": "^3.5.3",
     "proxyquire": "^1.8.0",
     "sinon": "^3.3.0",
-    "supertest": "^3.0.0",
-    "supertest-session": "^3.1.0",
     "supertest": "latest",
-    "express-ejs-layouts": "latest"
+    "supertest-session": "^3.1.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverage": false,
+    "clearMocks": true,
+    "testRegex": ".*\\.spec.js$"
   }
 }

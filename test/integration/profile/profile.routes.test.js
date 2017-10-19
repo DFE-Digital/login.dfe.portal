@@ -1,4 +1,5 @@
-"use strict";
+'use strict';
+
 const path = require('path');
 const chai = require('chai');
 const request = require('supertest');
@@ -22,20 +23,20 @@ describe('Integration tests for', () => {
       it('Get / should return status 200', async () => {
         const profile = require('../../../src/app/profile/index');
         app.use('/', profile(null));
-        let response = await request(app).get('/');
+        const response = await request(app).get('/');
         expect(response.statusCode).to.equal(200);
       });
     });
     describe('as an unauthenticated user', () => {
       beforeEach(() => {
         process.env.settings = `config/login.dfe.portal.dev.json`;
-        app.use(expressAuthenticationStub(false, {user: {}, session:{redirectUrl: '/'}}));
+        app.use(expressAuthenticationStub(false, {user: {}, session: {redirectUrl: '/'}}));
       });
       it('Get / path should return status 302', async () => {
         const profile = require('../../../src/app/profile/index');
         app.use('/', profile(null));
 
-        let response = await request(app).get('/');
+        const response = await request(app).get('/');
         expect(response.statusCode).to.equal(302);
       });
     });

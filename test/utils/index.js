@@ -19,6 +19,12 @@ const expressAuthenticationStub = (authenticated, extras) => {
     };
     req.user = {};
     Object.assign(req, extras);
+
+    if (!res.locals) {
+      res.locals = {};
+    }
+    res.locals.flash = {};
+
     next();
   };
 };

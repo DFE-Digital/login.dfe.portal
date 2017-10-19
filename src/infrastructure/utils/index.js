@@ -8,8 +8,12 @@ const isLoggedIn = (req, res, next) => {
   return res.status(302).redirect(`/auth`);
 };
 
+const getUserEmail = (user) => {
+  return user.email || '';
+};
+
 const getUserDisplayName = (user) => {
   return `${user.given_name || ''} ${user.family_name || ''}`.trim();
 };
 
-module.exports = {isLoggedIn, getUserDisplayName};
+module.exports = {isLoggedIn, getUserEmail, getUserDisplayName};

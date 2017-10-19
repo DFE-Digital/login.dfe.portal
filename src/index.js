@@ -3,15 +3,18 @@ const fs = require('fs');
 const express = require('express');
 const passport = require('passport');
 const expressLayouts = require('express-ejs-layouts');
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const morgan = require('morgan');
 const csurf = require('csurf');
-const config = require('./infrastructure/config');
+const flash = require('express-flash-2');
+const config = require('./infrastructure/config')();
 const getPassportStrategy = require('./infrastructure/oidc');
 const logger = require('./infrastructure/logger');
 const devRoutes = require('./app/devLauncher');
 const userProfile = require('./app/profile');
+const changePassword = require('./app/changePassword');
 const portalHome = require('./app/home');
 const help = require('./app/help');
 const terms = require('./app/terms');
@@ -41,9 +44,11 @@ init = async () => {
 
   // use middleware
   app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(cookieParser());
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(expressLayouts);
+  app.use(flash());
 
   // ejs settings
   app.set('view engine', 'ejs');
@@ -54,6 +59,7 @@ init = async () => {
   if(config.hostingEnvironment.showDevViews === 'true') app.use('/dev',devRoutes(csrf));
   app.use('/', portalHome(csrf));
   app.use('/profile', userProfile(csrf));
+  app.use('/change-password', changePassword(csrf));
   app.use('/help', help(csrf));
   app.use('/terms', terms(csrf));
 
