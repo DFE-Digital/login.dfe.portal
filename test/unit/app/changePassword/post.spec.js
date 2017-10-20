@@ -59,7 +59,7 @@ describe('when processing a users request to change password', () => {
     await action(req, res);
 
     expect(render.mock.calls.length).toBe(1);
-    expect(render.mock.calls[0][0]).toBe('changepassword/views/change');
+    expect(render.mock.calls[0][0]).toBe('changePassword/views/change');
     expect(render.mock.calls[0][1]).toMatchObject({
       validationFailed: true,
       validationMessages: {
@@ -74,7 +74,7 @@ describe('when processing a users request to change password', () => {
     await action(req, res);
 
     expect(render.mock.calls.length).toBe(1);
-    expect(render.mock.calls[0][0]).toBe('changepassword/views/change');
+    expect(render.mock.calls[0][0]).toBe('changePassword/views/change');
     expect(render.mock.calls[0][1]).toMatchObject({
       validationFailed: true,
       validationMessages: {
@@ -89,7 +89,7 @@ describe('when processing a users request to change password', () => {
     await action(req, res);
 
     expect(render.mock.calls.length).toBe(1);
-    expect(render.mock.calls[0][0]).toBe('changepassword/views/change');
+    expect(render.mock.calls[0][0]).toBe('changePassword/views/change');
     expect(render.mock.calls[0][1]).toMatchObject({
       validationFailed: true,
       validationMessages: {
@@ -105,7 +105,7 @@ describe('when processing a users request to change password', () => {
     await action(req, res);
 
     expect(render.mock.calls.length).toBe(1);
-    expect(render.mock.calls[0][0]).toBe('changepassword/views/change');
+    expect(render.mock.calls[0][0]).toBe('changePassword/views/change');
     expect(render.mock.calls[0][1]).toMatchObject({
       validationFailed: true,
       validationMessages: {
@@ -120,7 +120,7 @@ describe('when processing a users request to change password', () => {
     await action(req, res);
 
     expect(render.mock.calls.length).toBe(1);
-    expect(render.mock.calls[0][0]).toBe('changepassword/views/change');
+    expect(render.mock.calls[0][0]).toBe('changePassword/views/change');
     expect(render.mock.calls[0][1]).toMatchObject({
       validationFailed: true,
       validationMessages: {
