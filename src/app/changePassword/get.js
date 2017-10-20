@@ -1,5 +1,5 @@
 const action = (req, res) => {
-  res.render('changepassword/views/change', {
+  res.render('changePassword/views/change', {
     csrfToken: req.csrfToken(),
       title: 'Change password',
     validationFailed: false,
