@@ -41,7 +41,7 @@ const action = async (req, res) => {
 
   const validationResult = validate(oldPassword, newPassword, confirmPassword);
   if (validationResult.failed) {
-    res.render('changepassword/views/change', {
+    res.render('changePassword/views/change', {
       csrfToken: req.csrfToken(),
       validationFailed: true,
         title: 'Change password',
@@ -53,7 +53,7 @@ const action = async (req, res) => {
   const account = Account.fromContext(req.user);
   const oldPasswordIsCorrect = await account.validatePassword(oldPassword);
   if (!oldPasswordIsCorrect) {
-    res.render('changepassword/views/change', {
+    res.render('changePassword/views/change', {
       csrfToken: req.csrfToken(),
       validationFailed: true,
         title: 'Change password',
