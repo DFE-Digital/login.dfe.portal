@@ -1,5 +1,11 @@
 {
   "loggerSettings": {
+    "redis": {
+      "enabled": true,
+      "host": "127.0.0.1",
+      "port": 6379,
+      "auth": null
+    },
     "logLevel": "warn",
     "colors": {
       "info": "yellow",

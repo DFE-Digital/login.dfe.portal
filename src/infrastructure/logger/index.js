@@ -1,5 +1,6 @@
 'use strict';
 
+require('winston-redis').Redis;
 const winston = require('winston');
 const config = require('../config/index')();
 
@@ -16,15 +17,21 @@ const loggerConfig = {
     silly: 6,
   },
   colors: (config && config.loggerSettings && config.loggerSettings.colors) ? config.loggerSettings.colors : null,
+  transports: [],
 };
 
-const logger = new (winston.Logger)({
-  levels: loggerConfig.levels,
-  colors: loggerConfig.colors,
-  transports: [
-    new (winston.transports.Console)({ level: logLevel, colorize: true }),
-  ],
-});
+loggerConfig.transports.push(new (winston.transports.Console)({level: logLevel, colorize: true}));
+if (config.loggerSettings.redis.enabled) {
+  loggerConfig.transports.push(new (winston.transports.Redis)({
+    level: 'audit',
+    length: 4294967295,
+    host: config.loggerSettings.redis.host,
+    port: config.loggerSettings.redis.port,
+    auth: config.loggerSettings.redis.auth,
+  }));
+}
+
+const logger = new (winston.Logger)(loggerConfig);
 
 process.on('unhandledRejection', (reason, p) => {
   logger.error('Unhandled Rejection at:', p, 'reason:', reason);
