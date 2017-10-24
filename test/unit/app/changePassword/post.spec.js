@@ -1,5 +1,9 @@
 jest.mock('./../../../../src/infrastructure/config');
+jest.mock('./../../../../src/infrastructure/logger');
 jest.mock('./../../../../src/infrastructure/account');
+
+const userId = 'User1';
+const userEmail = 'user.one@unit.test';
 
 describe('when processing a users request to change password', () => {
 
@@ -11,6 +15,7 @@ describe('when processing a users request to change password', () => {
   let redirect;
   let res;
   let action;
+  let loggerAudit;
 
   beforeEach(() => {
     const config = require('./../../../../src/infrastructure/config');
@@ -25,6 +30,8 @@ describe('when processing a users request to change password', () => {
     const Account = require('./../../../../src/infrastructure/account');
     Account.fromContext = jest.fn().mockImplementation(() => {
       return {
+        id: userId,
+        email: userEmail,
         validatePassword,
         setPassword,
       };
@@ -49,6 +56,10 @@ describe('when processing a users request to change password', () => {
       flash,
       redirect,
     };
+
+    loggerAudit = jest.fn();
+    const logger = require('./../../../../src/infrastructure/logger');
+    logger.audit = loggerAudit;
 
     action = require('./../../../../src/app/changePassword/post');
   });
@@ -149,6 +160,32 @@ describe('when processing a users request to change password', () => {
 
     expect(redirect.mock.calls.length).toBe(1);
     expect(redirect.mock.calls[0][0]).toBe('/profile');
+  });
+
+  it('then it should audit a successful change of password if validation passes', async () => {
+    await action(req, res);
+
+    expect(loggerAudit.mock.calls.length).toBe(1);
+    expect(loggerAudit.mock.calls[0][0]).toBe(`Successfully changed password for ${userEmail} (id: ${userId})`);
+    expect(loggerAudit.mock.calls[0][1]).toMatchObject({
+      type: 'change-password',
+      success: true,
+      userId,
+    });
+  });
+
+  it('then it should audit a failed change of password if old password is not valid', async () => {
+    validatePassword.mockReturnValue(false);
+
+    await action(req, res);
+
+    expect(loggerAudit.mock.calls.length).toBe(1);
+    expect(loggerAudit.mock.calls[0][0]).toBe(`Failed changed password for ${userEmail} (id: ${userId}) - Incorrect current password`);
+    expect(loggerAudit.mock.calls[0][1]).toMatchObject({
+      type: 'change-password',
+      success: false,
+      userId,
+    });
   });
 
 });

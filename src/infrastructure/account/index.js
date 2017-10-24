@@ -32,6 +32,13 @@ class Account {
   constructor(claims) {
     this.claims = claims;
   }
+  get id() {
+    return this.claims.sub;
+  }
+
+  get email() {
+    return this.claims.email;
+  }
 
   static fromContext(user) {
     return new Account(user);
@@ -52,7 +59,7 @@ class Account {
     const response = await callDirectoriesApi(`${config.directories.directoryId}/user/${uid}/changepassword`, {
       password,
     });
-    if(!response.success) {
+    if (!response.success) {
       throw new Error(response.errorMessage);
     }
   }
