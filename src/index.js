@@ -12,12 +12,7 @@ const flash = require('express-flash-2');
 const config = require('./infrastructure/config')();
 const getPassportStrategy = require('./infrastructure/oidc');
 const logger = require('./infrastructure/logger');
-const devRoutes = require('./app/devLauncher');
-const userProfile = require('./app/profile');
-const changePassword = require('./app/changePassword');
-const portalHome = require('./app/home');
-const help = require('./app/help');
-const terms = require('./app/terms');
+const setupAppRoutes = require('./app/routes');
 const startServer = require('./server');
 
 init = async () => {
@@ -56,12 +51,7 @@ init = async () => {
   app.set('layout', 'layouts/layout');
 
   // Setup routes
-  if(config.hostingEnvironment.showDevViews === 'true') app.use('/dev',devRoutes(csrf));
-  app.use('/', portalHome(csrf));
-  app.use('/profile', userProfile(csrf));
-  app.use('/change-password', changePassword(csrf));
-  app.use('/help', help(csrf));
-  app.use('/terms', terms(csrf));
+  setupAppRoutes(app, csrf);
 
   // auth callbacks
   app.get('/auth', passport.authenticate('oidc'));
@@ -76,6 +66,8 @@ init = async () => {
         redirectUrl = req.session.redirectUrl;
         req.session.redirectUrl = null;
       }
+
+      user.id_token = user.id_token;
       req.logIn(user, function(err){
         if (err) { return next(err); }
       });
