@@ -1,5 +1,6 @@
 const {getUserEmail} = require('./../../infrastructure/utils');
 const Account = require('./../../infrastructure/account');
+const logger = require('./../../infrastructure/logger');
 
 const validate = (oldPassword, newPassword, confirmPassword) => {
   const messages = {
@@ -53,6 +54,12 @@ const action = async (req, res) => {
   const account = Account.fromContext(req.user);
   const oldPasswordIsCorrect = await account.validatePassword(oldPassword);
   if (!oldPasswordIsCorrect) {
+    logger.audit(`Failed changed password for ${account.email} (id: ${account.id}) - Incorrect current password`, {
+      type: 'change-password',
+      success: false,
+      userId: account.id,
+    });
+
     res.render('changePassword/views/change', {
       csrfToken: req.csrfToken(),
       validationFailed: true,
@@ -63,10 +70,16 @@ const action = async (req, res) => {
         confirmPassword: '',
       },
     });
+
     return;
   }
 
   await account.setPassword(newPassword);
+  logger.audit(`Successfully changed password for ${account.email} (id: ${account.id})`, {
+    type: 'change-password',
+    success: true,
+    userId: account.id,
+  });
 
   res.flash('info', 'Your password has been changed');
   res.redirect('/profile');
