@@ -2,7 +2,7 @@
 
 const url = require('url');
 const passport = require('passport');
-const config = require('./../../infrastructure/config');
+const config = require('./../../infrastructure/config')();
 
 const signUserOut = (req, res, next) => {
   if (req.user.id_token){
