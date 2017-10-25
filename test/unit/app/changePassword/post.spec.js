@@ -1,6 +1,7 @@
 jest.mock('./../../../../src/infrastructure/config');
 jest.mock('./../../../../src/infrastructure/logger');
 jest.mock('./../../../../src/infrastructure/account');
+jest.mock('login.dfe.validation');
 
 const userId = 'User1';
 const userEmail = 'user.one@unit.test';
@@ -16,6 +17,7 @@ describe('when processing a users request to change password', () => {
   let res;
   let action;
   let loggerAudit;
+  let doesPasswordMeetPolicy;
 
   beforeEach(() => {
     const config = require('./../../../../src/infrastructure/config');
@@ -60,6 +62,10 @@ describe('when processing a users request to change password', () => {
     loggerAudit = jest.fn();
     const logger = require('./../../../../src/infrastructure/logger');
     logger.audit = loggerAudit;
+
+    doesPasswordMeetPolicy = jest.fn().mockReturnValue(true);
+    const validation = require('login.dfe.validation');
+    validation.passwordPolicy.doesPasswordMeetPolicy = doesPasswordMeetPolicy;
 
     action = require('./../../../../src/app/changePassword/post');
   });
@@ -188,4 +194,18 @@ describe('when processing a users request to change password', () => {
     });
   });
 
+  it('then it should return failed view if new password does not meet policy', async () => {
+    doesPasswordMeetPolicy.mockReturnValue(false);
+
+    await action(req, res);
+
+    expect(render.mock.calls.length).toBe(1);
+    expect(render.mock.calls[0][0]).toBe('changePassword/views/change');
+    expect(render.mock.calls[0][1]).toMatchObject({
+      validationFailed: true,
+      validationMessages: {
+        newPassword: 'Your password does not meet the minimum requirements',
+      },
+    });
+  });
 });
