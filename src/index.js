@@ -66,12 +66,12 @@ init = async () => {
         redirectUrl = req.session.redirectUrl;
         req.session.redirectUrl = null;
       }
-
-      user.id_token = user.id_token;
-      req.logIn(user, function(err){
+  
+      req.logIn(user, (err) => {
         if (err) { return next(err); }
+        if (redirectUrl.endsWith('signout/complete')) redirectUrl = '/';
+        res.redirect(redirectUrl);
       });
-      res.redirect(redirectUrl);
     })(req, res, next)
   });
 
@@ -86,3 +86,4 @@ const app = init().catch((err => {
 }));
 
 module.exports = app;
+
