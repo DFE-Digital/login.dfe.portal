@@ -7,6 +7,7 @@ const portalHome = require('./../home');
 const help = require('./../help');
 const terms = require('./../terms');
 const signOut = require('./../signOut');
+const services = require('./../services');
 const config = require('./../../infrastructure/config')();
 
 
@@ -18,6 +19,7 @@ const routes = (app, csrf) => {
   app.use('/help', help(csrf));
   app.use('/terms', terms(csrf));
   app.use('/signout', signOut(csrf));
+  app.use('/services', services(csrf));
 };
 
 module.exports = routes;
