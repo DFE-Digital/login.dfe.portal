@@ -53,6 +53,16 @@ init = async () => {
   // Setup routes
   setupAppRoutes(app, csrf);
 
+
+  // Setup global locals for layouts and views
+  Object.assign(app.locals, {
+    app: {
+      title: 'Login.Dfe',
+    },
+  });
+
+
+
   // auth callbacks
   app.get('/auth', passport.authenticate('oidc'));
   app.get('/auth/cb', (req, res, next) => {
@@ -66,7 +76,7 @@ init = async () => {
         redirectUrl = req.session.redirectUrl;
         req.session.redirectUrl = null;
       }
-  
+
       req.logIn(user, (err) => {
         if (err) { return next(err); }
         if (redirectUrl.endsWith('signout/complete')) redirectUrl = '/';
