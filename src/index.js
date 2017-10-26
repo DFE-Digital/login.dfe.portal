@@ -66,13 +66,12 @@ init = async () => {
         redirectUrl = req.session.redirectUrl;
         req.session.redirectUrl = null;
       }
-
-      req.logIn(user, function(err){
+  
+      req.logIn(user, (err) => {
         if (err) { return next(err); }
+        if (redirectUrl.endsWith('signout/complete')) redirectUrl = '/';
+        res.redirect(redirectUrl);
       });
-
-      if (redirectUrl.endsWith('signout/complete')) redirectUrl = '/';
-      res.redirect(redirectUrl);
     })(req, res, next)
   });
 
