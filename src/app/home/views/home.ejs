@@ -1,10 +1,24 @@
 <div class="grid-row">
     <div class="col-12">
         <h1 class="heading-xlarge">
-            This will be the portal Home Page
+            All services within DfE sign in
         </h1>
 
-        <p class="lede">This is where you will see <span class="bold">Available Services</span>, for now all you can do is see <a href="/profile">your profile</a></p>
+        <ul>
+            <% for (let i = 0; i < locals.availableServices.length; i++) { %>
+            <li>
+                <section class="service">
+                    <header>
+                        <h3><%=locals.availableServices[i].title%></h3>
+                    </header>
+                    <main>
+                        <p><%=locals.availableServices[i].description%></p>
+                        <a href="services/request-access/<%=locals.availableServices[i].id%>" class="button">Request access to <%=locals.availableServices[i].title%></a>
+                    </main>
+                </section>
+            </li>
+            <% } %>
+        </ul>
 
     </div>
 </div>
