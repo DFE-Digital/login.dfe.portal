@@ -38,6 +38,19 @@
       }
     }
   },
+  "organisations": {
+    "service": {
+      "url": "ADD_ORGANISATIONS_URL",
+      "auth": {
+        "type": "aad",
+        "tenant": "ADD_AAD_TENANT",
+        "authorityHostUrl": "ADD_AAD_URL",
+        "clientId": "ADD_AAD_CLIENT_ID",
+        "clientSecret": "ADD_AAD_CLIENT_SECRET",
+        "resource": "ADD_AAD_RESOURCE"
+      }
+    }
+  },
   "identifyingParty": {
     "url": "ADD_OIDC_ROOT_URL_HERE_PLEASE",
     "clientId": "ADD_CLIENT_ID_HERE_PLEASE",
