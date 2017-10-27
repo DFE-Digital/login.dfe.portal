@@ -39,6 +39,7 @@
     }
   },
   "organisations": {
+    "type":"Static",
     "service": {
       "url": "ADD_ORGANISATIONS_URL",
       "auth": {
