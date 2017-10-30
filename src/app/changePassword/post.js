@@ -1,6 +1,7 @@
 const {getUserEmail} = require('./../../infrastructure/utils');
 const Account = require('./../../infrastructure/account');
 const logger = require('./../../infrastructure/logger');
+const {passwordPolicy} = require('login.dfe.validation');
 
 const validate = (oldPassword, newPassword, confirmPassword) => {
   const messages = {
@@ -19,9 +20,15 @@ const validate = (oldPassword, newPassword, confirmPassword) => {
     messages.newPassword = 'Enter a new password';
     failed = true;
   }
-  else if (!confirmPassword) {
-    messages.confirmPassword = 'Passwords do not match';
-    failed = true;
+  else {
+    if (!passwordPolicy.doesPasswordMeetPolicy(newPassword)) {
+      messages.newPassword = 'Your password does not meet the minimum requirements';
+      failed = true;
+    }
+    if (!confirmPassword) {
+      messages.confirmPassword = 'Passwords do not match';
+      failed = true;
+    }
   }
 
   if (newPassword && confirmPassword && newPassword !== confirmPassword) {

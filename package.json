@@ -29,6 +29,7 @@
     "express-flash-2": "^1.0.1",
     "express-session": "^1.15.6",
     "login.dfe.jwt-strategies": "github:DFE-Digital/login.dfe.jwt-strategies#master",
+    "login.dfe.validation": "github:DFE-Digital/login.dfe.validation#master",
     "mocha": "latest",
     "morgan": "^1.9.0",
     "openid-client": "^1.15.0",
