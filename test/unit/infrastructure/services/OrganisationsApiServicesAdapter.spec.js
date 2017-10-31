@@ -20,7 +20,7 @@ describe('when getting available services for a user', () => {
     rp.mockReturnValue([
       {
         id: 'service1',
-        title: 'Service One',
+        name: 'Service One',
         description: 'Some service',
       },
     ]);
@@ -50,7 +50,7 @@ describe('when getting available services for a user', () => {
     await adapter.getAvailableServicesForUser('user1');
 
     expect(rp.mock.calls.length).toBe(1);
-    expect(rp.mock.calls[0][0].uri).toBe('http://orgs.api.test/services/unassociatedWithUser/user1');
+    expect(rp.mock.calls[0][0].uri).toBe('http://orgs.api.test/services/unassociated-with-user/user1');
   });
 
   it('then it should include the bearer token for authorization', async () => {
@@ -68,7 +68,7 @@ describe('when getting available services for a user', () => {
     expect(actual.length).toBe(1);
     expect(actual[0]).toBeInstanceOf(Service);
     expect(actual[0].id).toBe('service1');
-    expect(actual[0].title).toBe('Service One');
+    expect(actual[0].name).toBe('Service One');
     expect(actual[0].description).toBe('Some service');
   })
 });

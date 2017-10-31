@@ -6,7 +6,7 @@ const rp = require('request-promise');
 const getAvailableServicesForUser = async (userId) => {
   const token = await jwtStrategy(config.organisations.service).getBearerToken();
   const services = await rp({
-    uri: `${config.organisations.service.url}/services/unassociatedWithUser/${userId}`,
+    uri: `${config.organisations.service.url}/services/unassociated-with-user/${userId}`,
     headers: {
       authorization: `Bearer ${token}`,
     },
