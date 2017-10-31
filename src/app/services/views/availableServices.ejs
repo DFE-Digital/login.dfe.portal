@@ -1,0 +1,24 @@
+<div class="grid-row">
+    <div class="col-12">
+        <h1 class="heading-xlarge">
+            All services within DfE sign in
+        </h1>
+
+        <ul>
+            <% for (let i = 0; i < locals.availableServices.length; i++) { %>
+            <li>
+                <section class="service">
+                    <header>
+                        <h3><%=locals.availableServices[i].name%></h3>
+                    </header>
+                    <main>
+                        <p><%=locals.availableServices[i].description%></p>
+                        <a href="services/request-access/<%=locals.availableServices[i].id%>" class="button">Request access to <%=locals.availableServices[i].title%></a>
+                    </main>
+                </section>
+            </li>
+            <% } %>
+        </ul>
+
+    </div>
+</div>
