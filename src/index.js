@@ -53,6 +53,16 @@ init = async () => {
   // Setup routes
   setupAppRoutes(app, csrf);
 
+
+  // Setup global locals for layouts and views
+  Object.assign(app.locals, {
+    app: {
+      title: 'Login.Dfe',
+    },
+  });
+
+
+
   // auth callbacks
   app.get('/auth', passport.authenticate('oidc'));
   app.get('/auth/cb', (req, res, next) => {
@@ -67,11 +77,11 @@ init = async () => {
         req.session.redirectUrl = null;
       }
 
-      user.id_token = user.id_token;
-      req.logIn(user, function(err){
+      req.logIn(user, (err) => {
         if (err) { return next(err); }
+        if (redirectUrl.endsWith('signout/complete')) redirectUrl = '/';
+        res.redirect(redirectUrl);
       });
-      res.redirect(redirectUrl);
     })(req, res, next)
   });
 
@@ -86,3 +96,4 @@ const app = init().catch((err => {
 }));
 
 module.exports = app;
+
