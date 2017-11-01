@@ -1,5 +1,6 @@
-const {mockRequest, mockResponse} = require('./../../../utils/jestMocks');
+const { mockRequest, mockResponse } = require('./../../../utils/jestMocks');
 
+jest.mock('./../../../../src/infrastructure/config');
 jest.mock('./../../../../src/infrastructure/utils');
 
 describe('when displaying the home page', () => {
@@ -10,6 +11,13 @@ describe('when displaying the home page', () => {
   let home;
 
   beforeEach(() => {
+    const config = require('./../../../../src/infrastructure/config');
+    config.mockImplementation(() => ({
+      organisations: {
+        type: 'static',
+      },
+    }));
+
     req = mockRequest();
     req.user = {
       sub: 'user1',
@@ -18,7 +26,7 @@ describe('when displaying the home page', () => {
     res = mockResponse();
 
     utilsGetUserDisplayName = jest.fn().mockImplementation((user) => {
-      if(user === req.user) {
+      if (user === req.user) {
         return 'User One';
       }
       return '';
