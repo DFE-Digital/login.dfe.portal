@@ -4,6 +4,7 @@
             All services within DfE sign in
         </h1>
 
+        <% if(locals.availableServices) { %>
         <ul>
             <% for (let i = 0; i < locals.availableServices.length; i++) { %>
             <li>
@@ -19,6 +20,8 @@
             </li>
             <% } %>
         </ul>
-
+        <% } else { %>
+        <p>No services available</p>
+        <% } %>
     </div>
 </div>

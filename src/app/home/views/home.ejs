@@ -5,6 +5,24 @@
         </h1>
 
         <p class="lede">This is where you will see <span class="bold">Available Services</span>, for now all you can do is see <a href="/profile">your profile</a></p>
+        <% if(locals.myServices) { %>
+        <ul>
+            <% for (let i = 0; i < locals.myServices.length; i++) { %>
+            <li>
+                <section class="service">
+                    <header>
+                        <h3><%=locals.myServices[i].service.name%></h3>
+                    </header>
+                    <main>
+                        <p><%=locals.myServices[i].service.description%></p>
+                    </main>
+                </section>
+            </li>
+            <% } %>
+        </ul>
+        <% } else { %>
+        <p>You have no services</p>
+        <% } %>
 
         <p><a href="/services/available-services">View all services within DfE sign in</a></p>
     </div>

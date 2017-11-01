@@ -1,4 +1,4 @@
-const {mockRequest, mockResponse} = require('./../../../utils/jestMocks');
+const { mockRequest, mockResponse } = require('./../../../utils/jestMocks');
 const Service = require('./../../../../src/infrastructure/services/Service');
 
 jest.mock('request-promise');
@@ -26,22 +26,18 @@ describe('when getting available services for a user', () => {
     ]);
 
     const jwtStrategy = require('login.dfe.jwt-strategies');
-    jwtStrategy.mockImplementation(() => {
-      return {
-        getBearerToken: () => 'token',
-      };
-    });
+    jwtStrategy.mockImplementation(() => ({
+      getBearerToken: () => 'token',
+    }));
 
     const config = require('./../../../../src/infrastructure/config');
-    config.mockImplementation(() => {
-      return {
-        organisations: {
-          service: {
-            url: 'http://orgs.api.test',
-          },
+    config.mockImplementation(() => ({
+      organisations: {
+        service: {
+          url: 'http://orgs.api.test',
         },
-      };
-    });
+      },
+    }));
 
     adapter = require('./../../../../src/infrastructure/services/OrganisationsApiServicesAdapter');
   });
@@ -70,5 +66,5 @@ describe('when getting available services for a user', () => {
     expect(actual[0].id).toBe('service1');
     expect(actual[0].name).toBe('Service One');
     expect(actual[0].description).toBe('Some service');
-  })
+  });
 });
