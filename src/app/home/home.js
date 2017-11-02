@@ -8,6 +8,7 @@ const home = async (req, res) => {
   res.render('home/views/home', {
     displayName: req.user ? getUserDisplayName(req.user) : 'Unknown User',
     user: req.user,
+      title: 'Access DfE services',
     myServices,
   });
 };
