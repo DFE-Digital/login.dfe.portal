@@ -13,9 +13,10 @@ const devLauncher = (csrf, routes) => {
 
   router.get('/', isLoggedIn, (req, res) => {
     res.render('devLauncher/views/launchpad', {
+      title: 'Dev launcher',
       uuid: uuid(),
       user: req.user,
-      routes
+      routes,
     });
   });
 
