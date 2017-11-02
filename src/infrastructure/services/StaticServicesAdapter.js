@@ -43,24 +43,17 @@ const getAvailableServicesForUser = (userId) => {
   ]);
 };
 
-const getServiceDetails = async (serviceId, userId) => {
-  const services = await getAvailableServicesForUser(userId);
-  return services.find((e) => e.id === serviceId);
-};
-
-const getServiceUsers = async (serviceId, userId) => {
+const getServiceUsers = async (serviceId) => {
   return Promise.resolve(
     [
-      new ServiceUser({id: '1234', name: 'Floyd Price', role: 'Approver'}),
-      new ServiceUser({id: userId, name: 'Paul Emmerson', role: 'Approver'}),
-      new ServiceUser({id: '1234', name: 'Dan Ashton', role: 'Ens User'}),
-      new ServiceUser({id: '1234', name: 'Simon Bull', role: 'End User'}),
-    ]
-  );
+      new ServiceUser({ id: '6cb83f92-980f-4782-aa81-b63334dae995', role: { id: 999, name: 'Approver' } }),
+      new ServiceUser({ id: 'aa3c5dac-f53c-4db6-a3df-ff1339434c74', role: { id: 999, name: 'Approver' } }),
+      new ServiceUser({ id: '63401a04-745c-46fc-bdaf-2147ba71d214', role: { id: 0, name: 'End user' } }),
+      new ServiceUser({ id: '86ee7a5f-1c2e-4edf-9812-7fa867cce122', role: { id: 0, name: 'End user' } }),
+    ]);
 };
 
 module.exports = {
   getAvailableServicesForUser,
-  getServiceDetails,
   getServiceUsers,
 };
