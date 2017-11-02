@@ -1,4 +1,12 @@
-jest.mock('./../../../../src/infrastructure/config');
+jest.mock('./../../../../src/infrastructure/config', () => {
+  return () => {
+    return {
+      directories: {
+        type: 'static',
+      },
+    };
+  };
+});
 jest.mock('./../../../../src/infrastructure/logger');
 jest.mock('./../../../../src/infrastructure/account');
 jest.mock('login.dfe.validation');
@@ -20,11 +28,6 @@ describe('when processing a users request to change password', () => {
   let doesPasswordMeetPolicy;
 
   beforeEach(() => {
-    const config = require('./../../../../src/infrastructure/config');
-    config.mockImplementation(() => {
-      return {};
-    });
-
     validatePassword = jest.fn().mockReturnValue(true);
 
     setPassword = jest.fn();
