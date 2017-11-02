@@ -16,6 +16,18 @@ const getAvailableServicesForUser = async (userId) => {
   return services.map(item => new Service(item));
 };
 
+const getServiceDetails = async (serviceId) => {
+  const token = await jwtStrategy(config.organisations.service).getBearerToken();
+  const service = await rp({
+    uri: `${config.organisations.service.url}/services/${serviceId}`,
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+    json: true,
+  });
+  return new Service(service);
+};
+
 const getServiceUsers = async (serviceId) => {
   const token = await jwtStrategy(config.organisations.service).getBearerToken();
   const users = await rp({
@@ -30,5 +42,6 @@ const getServiceUsers = async (serviceId) => {
 
 module.exports = {
   getAvailableServicesForUser,
+  getServiceDetails,
   getServiceUsers,
 };

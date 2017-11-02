@@ -29,7 +29,7 @@ class StaticAccount extends Account {
   }
   static async getById(id) {
     const account = accounts.find(item => item.sub.toLowerCase() === id.toLowerCase());
-    return Promise.resolve(account);
+    return Promise.resolve(account ? new StaticAccount(account) : null);
   }
 }
 

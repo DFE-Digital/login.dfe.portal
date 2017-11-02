@@ -1,14 +1,13 @@
 'use strict';
 
-const { getAvailableServicesForUser, getServiceUsers } = require('./../../infrastructure/services');
+const { getServiceDetails, getServiceUsers } = require('./../../infrastructure/services');
 const Account = require('./../../infrastructure/account');
 
 const viewService = async (req, res) => {
   const serviceId = req.params.service_id;
   const userId = req.user.sub;
 
-  const availableServices = await getAvailableServicesForUser(userId);
-  const serviceDetails = availableServices.find((e) => e.id === serviceId);
+  const serviceDetails = await getServiceDetails(serviceId);
   if (!serviceDetails) {
     res.status(404).send();
     return;

@@ -45,7 +45,7 @@ class DirectoriesApiAccount extends Account {
       }
       throw new Error(response.errorMessage);
     }
-    return response;
+    return new DirectoriesApiAccount(response.result);
   }
 
   async validatePassword(password) {
