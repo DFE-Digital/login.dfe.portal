@@ -2,7 +2,7 @@ const Service = require('./Service');
 const jwtStrategy = require('login.dfe.jwt-strategies');
 const config = require('./../config')();
 const rp = require('request-promise');
-const ServiceUser = require('./serviceUser');
+const ServiceUser = require('./ServiceUser');
 
 const getAvailableServicesForUser = async (userId) => {
   const token = await jwtStrategy(config.organisations.service).getBearerToken();

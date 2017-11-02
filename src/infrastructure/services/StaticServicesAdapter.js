@@ -1,7 +1,7 @@
 'use strict';
 
 const Service = require('./Service');
-const ServiceUser = require('./serviceUser');
+const ServiceUser = require('./ServiceUser');
 
 const services = [
   new Service({
