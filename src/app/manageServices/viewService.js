@@ -11,6 +11,7 @@ const viewService = async (req, res) => {
   const serviceDetails = availableServices.find((e) => e.id === serviceId);
   if (!serviceDetails) {
     res.status(404).send();
+    return;
   }
 
   const serviceUsers = await getServiceUsers(serviceId, userId);

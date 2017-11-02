@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const Service = require('./Service');
 const ServiceUser = require('./serviceUser');
@@ -39,8 +39,12 @@ const getAvailableServicesForUser = (userId) => {
       id: '4d46ed12-c4a9-462b-8c33-f323e5f4c4f9',
       name: 'COLLECT',
       description: 'Parrel schooner execution dock careen gun nipper salmagundi lee interloper black spot skysail transom Pieces of Eight lugsail strike colors rum stern Brethren of the Coast reef chase.'
-    })
+    }),
   ]);
+};
+
+const getServicesForUser = async (userId) => {
+  return Promise.resolve([]);
 };
 
 const getServiceUsers = async (serviceId) => {

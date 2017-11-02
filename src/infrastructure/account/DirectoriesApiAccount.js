@@ -3,18 +3,21 @@ const rp = require('request-promise');
 const jwtStrategy = require('login.dfe.jwt-strategies');
 const config = require('./../config')();
 
-const callDirectoriesApi = async (resource, body) => {
+const callDirectoriesApi = async (resource, body, method = 'POST') => {
   const token = await jwtStrategy(config.directories.service).getBearerToken();
   try {
-    const result = await rp({
-      method: 'POST',
+    const opts = {
+      method,
       uri: `${config.directories.service.url}/${resource}`,
       headers: {
         authorization: `bearer ${token}`,
       },
-      body,
       json: true,
-    });
+    };
+    if (method === 'POST') {
+      opts.body = body;
+    }
+    const result = await rp(opts);
 
     return {
       success: true,
@@ -32,6 +35,17 @@ const callDirectoriesApi = async (resource, body) => {
 class DirectoriesApiAccount extends Account {
   static fromContext(user) {
     return new DirectoriesApiAccount(user);
+  }
+
+  static async getById(id) {
+    const response = await callDirectoriesApi(`${config.directories.directoryId}/user/${id}`, null, 'GET');
+    if (!response.success) {
+      if (response.statusCode === 404) {
+        return null;
+      }
+      throw new Error(response.errorMessage);
+    }
+    return response;
   }
 
   async validatePassword(password) {
