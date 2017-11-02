@@ -37,13 +37,15 @@
     "request-promise": "^4.2.2",
     "uuid": "^3.1.0",
     "winston": "^2.3.1",
-    "winston-redis": "^1.0.0"
+    "winston-redis": "^1.0.0",
+    "express-list-endpoints": "^3.0.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",
     "eslint": "^4.8.0",
     "eslint-config-airbnb-base": "^11.3.1",
     "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jest": "^21.2.0",
     "express-ejs-layouts": "latest",
     "gulp": "^3.9.0",
     "gulp-zip": "^3.0.2",

@@ -23,7 +23,7 @@ describe('Integration tests for', () => {
 
       it('Get / should return status 200', async () => {
         const dev = require('../../../src/app/devLauncher/index');
-        app.use('/', dev(null));
+        app.use('/', dev(null, []));
         let response = await request(app).get('/');
         expect(response.statusCode).to.equal(200);
       });
@@ -36,7 +36,7 @@ describe('Integration tests for', () => {
 
       it('Get / path should return status 302', async () => {
         const dev = require('../../../src/app/devLauncher/index');
-        app.use('/', dev(null));
+        app.use('/', dev(null, []));
 
         let response = await request(app).get('/');
         expect(response.statusCode).to.equal(302);
