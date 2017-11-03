@@ -1,24 +1,22 @@
+<a href="/" class="link-back">Back</a>
 <div class="grid-row">
-    <div class="col-12">
+    <div class="col-8">
         <h1 class="heading-xlarge">
             All services within DfE sign in
         </h1>
-
-        <ul>
+        <% if(locals.availableServices) { %>
+        <ul class="list-bullet available-service-list">
             <% for (let i = 0; i < locals.availableServices.length; i++) { %>
             <li>
-                <section class="service">
-                    <header>
-                        <h3><%=locals.availableServices[i].name%></h3>
-                    </header>
-                    <main>
-                        <p><%=locals.availableServices[i].description%></p>
-                        <a href="services/request-access/<%=locals.availableServices[i].id%>" class="button">Request access to <%=locals.availableServices[i].title%></a>
-                    </main>
-                </section>
+                <h3 class="heading-small"><%=locals.availableServices[i].name%></h3>
+                <a href="services/request-access/<%=locals.availableServices[i].id%>">
+                    Request access to <%=locals.availableServices[i].name%>
+                </a>
             </li>
             <% } %>
         </ul>
-
+        <% } else { %>
+        <p>No services available</p>
+        <% } %>
     </div>
 </div>

@@ -1,6 +1,9 @@
 'use strict';
 
 const Service = require('./Service');
+const Role = require('./Role');
+const Organisation = require('./Organisation');
+const UserService = require('./UserServices');
 const ServiceUser = require('./ServiceUser');
 
 const services = [
@@ -42,7 +45,17 @@ const services = [
 ];
 
 const getAvailableServicesForUser = (userId) => {
-  return Promise.resolve(services);
+  return Promise.resolve({
+    service: new Service({
+      id: '4d46ed12-c4a9-462b-8c33-f323e5f4c4f9',
+      name: 'COLLECT',
+      description: 'Parrel schooner execution dock careen gun nipper salmagundi lee interloper black spot skysail transom Pieces of Eight lugsail strike colors rum stern Brethren of the Coast reef chase.'
+    }),
+  });
+  // organisation: new Organisation(),
+  // userService: new UserService(),
+
+
 };
 
 const getServiceDetails = async (serviceId) => {

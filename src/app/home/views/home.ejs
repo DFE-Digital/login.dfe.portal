@@ -1,11 +1,45 @@
 <div class="grid-row">
-    <div class="col-12">
+    <div class="col-8">
         <h1 class="heading-xlarge">
-            This will be the portal Home Page
+            Access DfE services
         </h1>
 
-        <p class="lede">This is where you will see <span class="bold">Available Services</span>, for now all you can do is see <a href="/profile">your profile</a></p>
+        <div class="heading-group">
+            <h2 class="heading-medium">Your DfE services</h2>
+            <a href="/services/available-services">View all services within DfE sign in</a>
+        </div>
 
-        <p><a href="/services/available-services">View all services within DfE sign in</a></p>
+        <% if(locals.myServices) { %>
+            <ul class="service-list">
+                <% for (let i = 0; i < locals.myServices.length; i++) { %>
+                <li>
+                    <a href="#" class="under-construction">
+                        <h3>
+                            <span class="service-title"><%=locals.myServices[i].service.name%></span>
+                            <span class="role-name"><%=locals.myServices[i].role.name%></span>
+                        </h3>
+                        <span><%=locals.myServices[i].service.description%></span>
+                    </a>
+                </li>
+                <% } %>
+            </ul>
+        <% } else { %>
+            <div class="empty-state">
+                <p>You don't have access to any services at the moment.</p>
+            </div>
+        <% } %>
+
+    </div>
+    <div class="col-4">
+        <aside>
+            <h2 class="heading-medium">Profile actions</h2>
+            <nav class="subnav">
+                <ul>
+                    <li><a href="user-profile-edit.html">Change my details</a></li>
+                    <li><a href="/change-password">Change my password</a></li>
+                    <li><a href="user-profile-delete.html">Delete my account</a></li>
+                </ul>
+            </nav>
+        </aside>
     </div>
 </div>
