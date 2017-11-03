@@ -25,6 +25,7 @@
     "sessionSecret": "your-magnate-muffler-sonic"
   },
   "directories": {
+    "type": "static",
     "directoryId": "ADD_DIRECTORY_ID",
     "service": {
       "url": "ADD_DIRECTORIES_URL",

@@ -1,0 +1,71 @@
+const Account = require('./Account');
+const rp = require('request-promise');
+const jwtStrategy = require('login.dfe.jwt-strategies');
+const config = require('./../config')();
+
+const callDirectoriesApi = async (resource, body, method = 'POST') => {
+  const token = await jwtStrategy(config.directories.service).getBearerToken();
+  try {
+    const opts = {
+      method,
+      uri: `${config.directories.service.url}/${resource}`,
+      headers: {
+        authorization: `bearer ${token}`,
+      },
+      json: true,
+    };
+    if (method === 'POST') {
+      opts.body = body;
+    }
+    const result = await rp(opts);
+
+    return {
+      success: true,
+      result,
+    };
+  } catch (e) {
+    return {
+      success: false,
+      statusCode: e.statusCode,
+      errorMessage: e.message,
+    };
+  }
+};
+
+class DirectoriesApiAccount extends Account {
+  static fromContext(user) {
+    return new DirectoriesApiAccount(user);
+  }
+
+  static async getById(id) {
+    const response = await callDirectoriesApi(`${config.directories.directoryId}/user/${id}`, null, 'GET');
+    if (!response.success) {
+      if (response.statusCode === 404) {
+        return null;
+      }
+      throw new Error(response.errorMessage);
+    }
+    return new DirectoriesApiAccount(response.result);
+  }
+
+  async validatePassword(password) {
+    const username = this.claims.email;
+    const response = await callDirectoriesApi(`${config.directories.directoryId}/user/authenticate`, {
+      username,
+      password,
+    });
+    return response.success;
+  }
+
+  async setPassword(password) {
+    const uid = this.claims.sub;
+    const response = await callDirectoriesApi(`${config.directories.directoryId}/user/${uid}/changepassword`, {
+      password,
+    });
+    if (!response.success) {
+      throw new Error(response.errorMessage);
+    }
+  }
+}
+
+module.exports = DirectoriesApiAccount;

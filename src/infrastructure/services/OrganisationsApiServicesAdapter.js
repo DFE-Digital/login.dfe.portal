@@ -1,53 +1,47 @@
 const Service = require('./Service');
-const Organisation = require('./Organisation');
-const UserService = require('./UserServices');
-const Role = require('./Role');
 const jwtStrategy = require('login.dfe.jwt-strategies');
 const config = require('./../config')();
-const logger = require('./../logger');
 const rp = require('request-promise');
+const ServiceUser = require('./ServiceUser');
 
 const getAvailableServicesForUser = async (userId) => {
   const token = await jwtStrategy(config.organisations.service).getBearerToken();
-  try {
-    const services = await rp({
-      uri: `${config.organisations.service.url}/services/unassociated-with-user/${userId}`,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-      json: true,
-    });
-    return services.map(item => new Service(item));
-  } catch (e) {
-    logger.error(e);
-  }
+  const services = await rp({
+    uri: `${config.organisations.service.url}/services/unassociated-with-user/${userId}`,
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+    json: true,
+  });
+  return services.map(item => new Service(item));
 };
 
-const getServicesForUser = async (userId) => {
+const getServiceDetails = async (serviceId) => {
   const token = await jwtStrategy(config.organisations.service).getBearerToken();
-  try {
-    const services = await rp({
-      uri: `${config.organisations.service.url}/services/associated-with-user/${userId}`,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-      json: true,
-    });
+  const service = await rp({
+    uri: `${config.organisations.service.url}/services/${serviceId}`,
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+    json: true,
+  });
+  return new Service(service);
+};
 
-    return services.map((item) => {
-      return {
-        service: new Service(item.service),
-        organisation: new Organisation(item.organisation),
-        userService: new UserService(item.userService),
-        role: new Role(item.role),
-      };
-    });
-  } catch (e) {
-    logger.error(e);
-  }
+const getServiceUsers = async (serviceId) => {
+  const token = await jwtStrategy(config.organisations.service).getBearerToken();
+  const users = await rp({
+    uri: `${config.organisations.service.url}/services/${serviceId}/users`,
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+    json: true,
+  });
+  return users.map(item => new ServiceUser(item));
 };
 
 module.exports = {
   getAvailableServicesForUser,
-  getServicesForUser,
+  getServiceDetails,
+  getServiceUsers,
 };
