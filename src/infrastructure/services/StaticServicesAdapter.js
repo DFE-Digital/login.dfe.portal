@@ -60,8 +60,14 @@ const getServiceUsers = async (serviceId) => {
     ]);
 };
 
+const getUserServiceRequest = async (userServiceId) => {
+  return Promise.resolve(new ServiceUser());
+};
+
+
 module.exports = {
   getAvailableServicesForUser,
   getServiceDetails,
   getServiceUsers,
+  getUserServiceRequest,
 };

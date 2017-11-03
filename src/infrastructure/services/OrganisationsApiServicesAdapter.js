@@ -3,6 +3,7 @@ const jwtStrategy = require('login.dfe.jwt-strategies');
 const config = require('./../config')();
 const rp = require('request-promise');
 const ServiceUser = require('./ServiceUser');
+const UserServiceRequest = require('./UserServiceRequest');
 
 const getAvailableServicesForUser = async (userId) => {
   const token = await jwtStrategy(config.organisations.service).getBearerToken();
@@ -40,8 +41,22 @@ const getServiceUsers = async (serviceId) => {
   return users.map(item => new ServiceUser(item));
 };
 
+const getUserServiceRequest = async (userServiceId) => {
+  const token = await jwtStrategy(config.organisations.service).getBearerToken();
+  const userServiceRequest = await rp({
+    uri: `${config.organisations.service.url}/services/${userServiceId}/request`,
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+    json: true,
+  });
+
+  return new UserServiceRequest(userServiceRequest);
+};
+
 module.exports = {
   getAvailableServicesForUser,
   getServiceDetails,
   getServiceUsers,
+  getUserServiceRequest,
 };
