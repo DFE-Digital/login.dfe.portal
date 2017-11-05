@@ -11,7 +11,7 @@ const routes = (csrf) => {
   logger.info('Mounting \'manage services\' routes');
 
   router.use(isLoggedIn);
-  router.get('/:service_id', viewService);
+  router.get('/:org_id/services/:service_id', viewService);
 
   return router;
 };
