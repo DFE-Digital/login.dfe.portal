@@ -16,4 +16,13 @@ const getUserDisplayName = (user) => {
   return `${user.given_name || ''} ${user.family_name || ''}`.trim();
 };
 
-module.exports = {isLoggedIn, getUserEmail, getUserDisplayName};
+
+const setUserContext = (req, res, next)=> {
+  if (req.user) {
+    res.locals.user = req.user;
+    res.locals.displayName = getUserDisplayName(req.user)
+  }
+  next()
+};
+
+module.exports = {isLoggedIn, getUserEmail, getUserDisplayName, setUserContext};

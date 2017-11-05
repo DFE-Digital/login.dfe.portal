@@ -10,12 +10,12 @@ const terms = require('./../terms');
 const signOut = require('./../signOut');
 const services = require('./../services');
 const manageServices = require('./../manageServices');
+const { setUserContext } = require('../../infrastructure/utils');
 
 const config = require('./../../infrastructure/config')();
 
-
 const routes = (app, csrf) => {
-
+  app.use(setUserContext);
   app.use('/', portalHome(csrf));
   app.use('/profile', userProfile(csrf));
   app.use('/change-password', changePassword(csrf));

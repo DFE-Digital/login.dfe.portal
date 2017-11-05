@@ -1,8 +1,23 @@
+"use strict";
+
 const Service = require('./Service');
 const jwtStrategy = require('login.dfe.jwt-strategies');
 const config = require('./../config')();
 const rp = require('request-promise');
+
 const ServiceUser = require('./ServiceUser');
+
+const getServicesForUser = async (userId) => {
+  const token = await jwtStrategy(config.organisations.service).getBearerToken();
+  const services = await rp({
+    uri: `${config.organisations.service.url}/services/associated-with-user/${userId}`,
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+    json: true,
+  });
+  return services.map(item => new Service(item));
+};
 
 const getAvailableServicesForUser = async (userId) => {
   const token = await jwtStrategy(config.organisations.service).getBearerToken();
@@ -16,10 +31,10 @@ const getAvailableServicesForUser = async (userId) => {
   return services.map(item => new Service(item));
 };
 
-const getServiceDetails = async (serviceId) => {
+const getServiceDetails = async (organisationId, serviceId) => {
   const token = await jwtStrategy(config.organisations.service).getBearerToken();
   const service = await rp({
-    uri: `${config.organisations.service.url}/services/${serviceId}`,
+    uri: `${config.organisations.service.url}/organisations/${organisationId}/services/${serviceId}`,
     headers: {
       authorization: `Bearer ${token}`,
     },
@@ -28,10 +43,10 @@ const getServiceDetails = async (serviceId) => {
   return new Service(service);
 };
 
-const getServiceUsers = async (serviceId) => {
+const getServiceUsers = async (organisationId, serviceId, userId) => {
   const token = await jwtStrategy(config.organisations.service).getBearerToken();
   const users = await rp({
-    uri: `${config.organisations.service.url}/services/${serviceId}/users`,
+    uri: `${config.organisations.service.url}/organisations/${organisationId}/services/${serviceId}/users`,
     headers: {
       authorization: `Bearer ${token}`,
     },
@@ -41,6 +56,7 @@ const getServiceUsers = async (serviceId) => {
 };
 
 module.exports = {
+  getServicesForUser,
   getAvailableServicesForUser,
   getServiceDetails,
   getServiceUsers,
