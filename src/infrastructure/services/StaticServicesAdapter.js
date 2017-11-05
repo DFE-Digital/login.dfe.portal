@@ -45,13 +45,48 @@ const services = [
 ];
 
 const getAvailableServicesForUser = (userId) => {
-  return Promise.resolve({
-    service: new Service({
+   return Promise.resolve([
+    new Service({
       id: '4d46ed12-c4a9-462b-8c33-f323e5f4c4f9',
       name: 'COLLECT',
-      description: 'Parrel schooner execution dock careen gun nipper salmagundi lee interloper black spot skysail transom Pieces of Eight lugsail strike colors rum stern Brethren of the Coast reef chase.'
+      description: 'Parrel schooner execution dock careen gun nipper salmagundi lee interloper black spot skysail transom Pieces of Eight lugsail strike colors rum stern Brethren of the Coast reef chase.',
+      organisation: new Organisation({
+        id: 1,
+        name: "St Patricks Primary"
+      }),
+      role: new Role( {
+        id: 1,
+        name: "Approver"
+      })
+
     }),
-  });
+     new Service({
+       id: '4d46ed12-c4a9-462b-8c33-f323e5f4c4f9',
+       name: 'Keys to Success',
+       description: 'Parrel schooner execution dock careen gun nipper salmagundi lee interloper black spot skysail transom Pieces of Eight lugsail strike colors rum stern Brethren of the Coast reef chase.',
+       organisation: new Organisation( {
+         id: 1,
+         name: "St Patricks Primary"
+       }),
+       role: new Role( {
+         id: 0,
+         name: "End User"
+       })
+     }),
+     new Service({
+       id: '4d46ed12-c4a9-462b-8c33-f323e5f4c4f9',
+       name: 'Keys to Success',
+       description: 'Parrel schooner execution dock careen gun nipper salmagundi lee interloper black spot skysail transom Pieces of Eight lugsail strike colors rum stern Brethren of the Coast reef chase.',
+       organisation: new Organisation( {
+         id: 2,
+         name: "Gearge Fentham Primary"
+       }),
+       role: new Role( {
+         id: 0,
+         name: "End User"
+       })
+     }),
+  ]);
   // organisation: new Organisation(),
   // userService: new UserService(),
 
