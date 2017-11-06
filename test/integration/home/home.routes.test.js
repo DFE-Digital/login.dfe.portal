@@ -13,7 +13,7 @@ describe('Integration tests for', () => {
     beforeEach(() => {
       process.env.settings = `config/login.dfe.portal.dev.json`;
       app = expressAppWithViews(path.resolve(__dirname, '../../../', 'src/app/'));
-
+      app.locals.title = 'Test Title';
     });
     describe('as an authenticated user', () => {
       beforeEach(() => {

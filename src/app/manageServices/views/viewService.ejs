@@ -1,26 +1,24 @@
 <a href="/" class="link-back">Back</a>
 
 <div class="row">
-    <div class="col-12">
+    <div class="col-8">
         <h1 class="heading-xlarge">
-            <%= locals.serviceName %>
+            <span class="heading-secondary">
+                <%= locals.serviceDetails.organisation.name %>
+            </span>
+            <%= locals.serviceDetails.name %>
         </h1>
+
         <% if (locals.flash.info) { %>
         <div class="notification notification-success">
             <%= locals.flash.info %>
         </div>
         <% } %>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-12">
         <table>
             <tr>
-                <th>Name</th>
+                <th class="primary-column">Name</th>
                 <th>Role</th>
-                <th>Organisation</th>
-                <th>User Type</th>
                 <th>Status</th>
             </tr>
             <% for(let i = 0; i < locals.serviceUsers.length; i++) {%>
@@ -28,11 +26,64 @@
             <tr>
                 <td><%= user.name %><sup style="font-size: 0.85em; color: #555; padding-left: 5px;" ><%= user.id === locals.currentUserId ? '(you)' : ''%></sup></td>
                 <td><%= user.role.name %></td>
-                <td>...</td>
-                <td>...</td>
-                <td>...</td>
+
+                <td>
+                    <% if (user.status === 1 ) { %>
+                        <span class="badge badge-default">Approved</span>
+                    <% } else { %>
+                    <a href="">
+                        <span class="badge badge-primary">Pending Approval</span>
+                    </a>
+                    <% } %>
+                </td>
             </tr>
             <% } %>
         </table>
     </div>
+    <div class="col-4">
+        <aside>
+            <h2 class="heading-medium">Actions</h2>
+            <nav class="subnav">
+                <ul>
+                    <li><a href="/help">Get help</a></li>
+                    <!--<li><a href="user-profile-edit.html">Change my details</a></li>-->
+                    <!--<li><a href="/change-password">Change my password</a></li>-->
+                </ul>
+            </nav>
+        </aside>
+    </div>
 </div>
+
+<style>
+    .badge {
+        display: inline-block;
+        padding: .25em .4em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: .25rem;
+    }
+
+    .badge-default{
+        background-color: #636c72;
+    }
+   .badge-info{
+        background-color: #5bc0de;
+    }
+
+    .badge-primary{
+        background-color:#0275d8;
+    }
+
+    .badge-success{
+        background-color:#0275d8;
+    }
+
+    .primary-column{
+        width: 100%;
+    }
+</style>

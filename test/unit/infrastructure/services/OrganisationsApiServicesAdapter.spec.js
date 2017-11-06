@@ -90,10 +90,10 @@ describe('when getting service details', () => {
   });
 
   it('then it should query organisations api', async () => {
-    await adapter.getServiceDetails('service1');
+    await adapter.getServiceDetails('org1', 'service1');
 
     expect(rp.mock.calls.length).toBe(1);
-    expect(rp.mock.calls[0][0].uri).toBe('http://orgs.api.test/services/service1');
+    expect(rp.mock.calls[0][0].uri).toBe('http://orgs.api.test/organisations/org1/services/service1');
   });
 
   it('then it should include the bearer token for authorization', async () => {
@@ -137,10 +137,10 @@ describe('when getting service users', () => {
   });
 
   it('then it should query organisations api', async () => {
-    await adapter.getServiceUsers('service1');
+    await adapter.getServiceUsers('org1', 'service1');
 
     expect(rp.mock.calls.length).toBe(1);
-    expect(rp.mock.calls[0][0].uri).toBe('http://orgs.api.test/services/service1/users');
+    expect(rp.mock.calls[0][0].uri).toBe('http://orgs.api.test/organisations/org1/services/service1/users');
   });
 
   it('then it should include the bearer token for authorization', async () => {

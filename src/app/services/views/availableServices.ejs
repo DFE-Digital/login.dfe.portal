@@ -1,24 +1,67 @@
+<a href="/" class="link-back">Back</a>
 <div class="grid-row">
-    <div class="col-12">
+    <div class="col-8">
         <h1 class="heading-xlarge">
-            All services within DfE sign in
+            Other services
         </h1>
-
-        <ul>
+        <p class="lede">Your may require access to one ore more of the following services, selecting a service will enable you to learn about the service and request access.</p>
+        <% if(locals.availableServices) { %>
+        <ul class="available-service-list service-list">
             <% for (let i = 0; i < locals.availableServices.length; i++) { %>
             <li>
-                <section class="service">
-                    <header>
-                        <h3><%=locals.availableServices[i].name%></h3>
-                    </header>
-                    <main>
-                        <p><%=locals.availableServices[i].description%></p>
-                        <a href="services/request-access/<%=locals.availableServices[i].id%>" class="button">Request access to <%=locals.availableServices[i].title%></a>
-                    </main>
-                </section>
+                <a href="services/request-access/<%= locals.availableServices[i].id %>">
+                    <h3>
+                        <span class="service-title"><%= locals.availableServices[i].name %></span>
+                    </h3>
+                    <span class="service-description"><%= locals.availableServices[i].description %></span>
+                </a>
             </li>
+
             <% } %>
         </ul>
-
+        <% } else { %>
+        <p>No services available</p>
+        <% } %>
+    </div>
+    <div class="col-4">
+        <aside>
+            <h2 class="heading-medium">Actions</h2>
+            <nav class="subnav">
+                <ul>
+                    <li><a href="/">See my services</a></li>
+                    <li><a href="/help">Get help</a></li>
+                    <!--<li><a href="user-profile-edit.html">Change my details</a></li>-->
+                    <!--<li><a href="/change-password">Change my password</a></li>-->
+                </ul>
+            </nav>
+        </aside>
     </div>
 </div>
+
+
+<style>
+
+    .service-list li a {
+        text-decoration: none;
+    }
+
+    .service-list li h3 {
+        text-decoration: none;
+    }
+
+    .service-list li a h3 span.service-title {
+        text-decoration: none;
+    }
+
+    .service-list li a span.service-description {
+        color: #111;
+    }
+
+
+    li.manage-service a {
+        padding: 5px 15px;
+        border-left-color: #a83632;
+    }
+
+
+</style>
