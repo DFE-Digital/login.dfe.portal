@@ -5,10 +5,11 @@
         </h1>
         <p class="lede">These are the services you are approved to use, if you require access to other services use you can <a href="/services/available-services">Learn about other services</a></p>
 
-        <% if(locals.myOrganisartions) { %>
+        <% if(locals.myOrganisations) { %>
 
-        <% for (let i = 0; i < locals.myOrganisartions.length; i++) { %>
-        <% const myServices = locals.myServicesByOrganisation[locals.myOrganisartions[i]] %>
+        <% for (let i = 0; i < locals.myOrganisations.length; i++) { %>
+        <% const myServices = locals.myServicesByOrganisations[locals.myOrganisations[i]] %>
+        <% if (myServices) { %>
         <h2 class="service-organisation"><%= myServices[0].organisation.name %></h2>
         <ul class="service-list">
             <% for (let s = 0; s < myServices.length; s++) { %>
@@ -30,12 +31,47 @@
             <% } %>
         </ul>
         <% } %>
-
+        <% } %>
         <% } else { %>
         <div class="empty-state">
             <p>You don't have access to any services at the moment.</p>
         </div>
         <% } %>
+
+
+        <% if(locals.myPendingOrganisations && locals.myPendingServicesByOrganisations) { %>
+        <h1 class="heading-xlarge">
+            Services pending approval
+        </h1>
+        <% for (let i = 0; i < locals.myPendingOrganisations.length; i++) { %>
+
+        <% const myServices = locals.myPendingServicesByOrganisations[locals.myPendingOrganisations[i]] %>
+
+        <% if (myServices) { %>
+
+        <h2 class="service-organisation"><%= myServices[0].organisation.name %></h2>
+        <ul class="service-list service-list-pending">
+            <% for (let s = 0; s < myServices.length; s++) { %>
+
+            <li>
+                <a href="#" class="under-construction">
+                    <h3>
+                        <span class="service-title"><%= myServices[s].name %></span>
+                        <span class="role-name"><%= myServices[s].role.name %></span>
+                    </h3>
+                    <span class="service-description"><%= myServices[s].description %></span>
+                </a>
+            </li>
+            <% if (myServices[s].role.id >= 1) { %>
+            <li class="manage-service">
+                <a href="/organisations/<%=myServices[s].organisation.id%>/services/<%=myServices[s].id%>">Manage this service</a>
+            </li>
+            <% } %>
+            <% } %>
+        </ul>
+        <%  } %>
+        <%  } %>
+        <%  } %>
 
     </div>
     <div class="col-4">
@@ -75,6 +111,10 @@
         float: right;
     }
 
+    .service-list-pending li a {
+        border-left-color: #999;
+    }
+
     h2.service-organisation {
         font-weight: bold;
         padding: 15px 0;
@@ -84,6 +124,8 @@
         position: relative;
         top: -9px;
     }
+
+
 
 
 
