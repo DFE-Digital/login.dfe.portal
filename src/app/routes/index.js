@@ -10,6 +10,7 @@ const terms = require('./../terms');
 const signOut = require('./../signOut');
 const services = require('./../services');
 const manageServices = require('./../manageServices');
+const serviceRequest = require('./../serviceRequest');
 
 const config = require('./../../infrastructure/config')();
 
@@ -23,6 +24,7 @@ const routes = (app, csrf) => {
   app.use('/terms', terms(csrf));
   app.use('/signout', signOut(csrf));
   app.use('/services', services(csrf), manageServices(csrf));
+  app.use('/services', serviceRequest(csrf));
   if(config.hostingEnvironment.showDevViews === 'true') app.use('/dev',devRoutes(csrf, listEndpoints(app)));
 };
 
