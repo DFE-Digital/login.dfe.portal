@@ -1,45 +1,139 @@
 <div class="grid-row">
     <div class="col-8">
         <h1 class="heading-xlarge">
-            Access DfE services
+            Your services
         </h1>
+        <p class="lede">These are the services you are approved to use, if you require access to other services use you can <a href="/services/available-services">Learn about other services</a></p>
 
-        <div class="heading-group">
-            <h2 class="heading-medium">Your DfE services</h2>
-            <a href="/services/available-services">View all services within DfE sign in</a>
-        </div>
+        <% if(locals.myOrganisations) { %>
 
-        <% if(locals.myServices) { %>
-            <ul class="service-list">
-                <% for (let i = 0; i < locals.myServices.length; i++) { %>
-                <li>
-                    <a href="#" class="under-construction">
-                        <h3>
-                            <span class="service-title"><%=locals.myServices[i].service.name%></span>
-                            <span class="role-name"><%=locals.myServices[i].role.name%></span>
-                        </h3>
-                        <span><%=locals.myServices[i].service.description%></span>
-                    </a>
-                </li>
-                <% } %>
-            </ul>
-        <% } else { %>
-            <div class="empty-state">
-                <p>You don't have access to any services at the moment.</p>
-            </div>
+        <% for (let i = 0; i < locals.myOrganisations.length; i++) { %>
+        <% const myServices = locals.myServicesByOrganisations[locals.myOrganisations[i]] %>
+        <% if (myServices) { %>
+        <h2 class="service-organisation"><%= myServices[0].organisation.name %></h2>
+        <ul class="service-list">
+            <% for (let s = 0; s < myServices.length; s++) { %>
+
+            <li>
+                <a href="#" class="under-construction">
+                    <h3>
+                        <span class="service-title"><%= myServices[s].name %></span>
+                        <span class="role-name"><%= myServices[s].role.name %></span>
+                    </h3>
+                    <span class="service-description"><%= myServices[s].description %></span>
+                </a>
+            </li>
+            <% if (myServices[s].role.id >= 1) { %>
+            <li class="manage-service">
+                <a href="/organisations/<%=myServices[s].organisation.id%>/services/<%=myServices[s].id%>">Manage this service</a>
+            </li>
+            <% } %>
+            <% } %>
+        </ul>
         <% } %>
+        <% } %>
+        <% } else { %>
+        <div class="empty-state">
+            <p>You don't have access to any services at the moment.</p>
+        </div>
+        <% } %>
+
+
+        <% if(locals.myPendingOrganisations && locals.myPendingServicesByOrganisations) { %>
+        <h1 class="heading-xlarge">
+            Services pending approval
+        </h1>
+        <% for (let i = 0; i < locals.myPendingOrganisations.length; i++) { %>
+
+        <% const myServices = locals.myPendingServicesByOrganisations[locals.myPendingOrganisations[i]] %>
+
+        <% if (myServices) { %>
+
+        <h2 class="service-organisation"><%= myServices[0].organisation.name %></h2>
+        <ul class="service-list service-list-pending">
+            <% for (let s = 0; s < myServices.length; s++) { %>
+
+            <li>
+                <a href="#" class="under-construction">
+                    <h3>
+                        <span class="service-title"><%= myServices[s].name %></span>
+                        <span class="role-name"><%= myServices[s].role.name %></span>
+                    </h3>
+                    <span class="service-description"><%= myServices[s].description %></span>
+                </a>
+            </li>
+            <% if (myServices[s].role.id >= 1) { %>
+            <li class="manage-service">
+                <a href="/organisations/<%=myServices[s].organisation.id%>/services/<%=myServices[s].id%>">Manage this service</a>
+            </li>
+            <% } %>
+            <% } %>
+        </ul>
+        <%  } %>
+        <%  } %>
+        <%  } %>
 
     </div>
     <div class="col-4">
         <aside>
-            <h2 class="heading-medium">Profile actions</h2>
+            <h2 class="heading-medium">Actions</h2>
             <nav class="subnav">
                 <ul>
-                    <li><a href="user-profile-edit.html">Change my details</a></li>
-                    <li><a href="/change-password">Change my password</a></li>
-                    <li><a href="user-profile-delete.html">Delete my account</a></li>
+                    <li><a href="/services/available-services">Learn about other services</a></li>
+                    <li><a href="/help">Get help</a></li>
+                    <!--<li><a href="user-profile-edit.html">Change my details</a></li>-->
+                    <!--<li><a href="/change-password">Change my password</a></li>-->
                 </ul>
             </nav>
         </aside>
     </div>
 </div>
+
+<style>
+
+    .service-list li a {
+        text-decoration: none;
+    }
+
+    .service-list li h3 {
+        text-decoration: none;
+    }
+
+    .service-list li a h3 span.service-title {
+        text-decoration: none;
+    }
+
+    .service-list li a span.service-description {
+        color: #111;
+    }
+
+    .service-list li a span.role-name {
+        float: right;
+    }
+
+    .service-list-pending li a {
+        border-left-color: #999;
+    }
+
+    h2.service-organisation {
+        font-weight: bold;
+        padding: 15px 0;
+    }
+
+    li.manage-service{
+        position: relative;
+        top: -9px;
+    }
+
+
+
+
+
+    li.manage-service a{
+       padding: 5px 15px;
+        border-left-color: #a83632;
+    }
+
+
+
+</style>
