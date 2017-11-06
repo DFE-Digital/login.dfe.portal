@@ -1,9 +1,15 @@
 <div class="grid-row">
     <div class="col-8">
         <h1 class="heading-xlarge">
-            Your services
+            Access DfE services
         </h1>
-        <p class="lede">These are the services you are approved to use, if you require access to other services use you can <a href="/services/available-services">Learn about other services</a></p>
+        <p class="">These are the services you are approved to use.</p>
+        <div class="heading-group">
+            <h2 class="heading-medium">
+                Your DfE services
+            </h2>
+            <span> <a href="/services/available-services">View available DfE services</a></span>
+        </div>
 
         <% if(locals.myOrganisations) { %>
 
@@ -13,60 +19,47 @@
         <h2 class="service-organisation"><%= myServices[0].organisation.name %></h2>
         <ul class="service-list">
             <% for (let s = 0; s < myServices.length; s++) { %>
-
-            <li>
-                <a href="#" class="under-construction">
-                    <h3>
-                        <span class="service-title"><%= myServices[s].name %></span>
-                        <span class="role-name"><%= myServices[s].role.name %></span>
-                    </h3>
-                    <span class="service-description"><%= myServices[s].description %></span>
-                </a>
-            </li>
-            <% if (myServices[s].role.id >= 1) { %>
-            <li class="manage-service">
-                <a href="/organisations/<%=myServices[s].organisation.id%>/services/<%=myServices[s].id%>">Manage this service</a>
-            </li>
-            <% } %>
+                <li>
+                    <a href="#" class="under-construction">
+                        <h3>
+                            <span class="service-title"><%= myServices[s].name %></span>
+                            <span class="role-name"><%= myServices[s].role.name %></span>
+                        </h3>
+                        <span class="service-description"><%= myServices[s].description %></span>
+                    </a>
+                </li>
+                <% if (myServices[s].role.id >= 1) { %>
+                <li class="manage-service">
+                    <a href="/organisations/<%=myServices[s].organisation.id%>/services/<%=myServices[s].id%>">Manage this service</a>
+                </li>
+                <% } %>
             <% } %>
         </ul>
         <% } %>
         <% } %>
         <% } else { %>
-        <div class="empty-state">
-            <p>You don't have access to any services at the moment.</p>
-        </div>
+            <div class="empty-state">
+                <p>You don't have access to any services at the moment.</p>
+            </div>
         <% } %>
 
 
         <% if(locals.myPendingOrganisations && locals.myPendingServicesByOrganisations) { %>
-        <h1 class="heading-xlarge">
-            Services pending approval
-        </h1>
+        <h3 class="heading-medium">You have requested access to the following services</h3>
         <% for (let i = 0; i < locals.myPendingOrganisations.length; i++) { %>
 
         <% const myServices = locals.myPendingServicesByOrganisations[locals.myPendingOrganisations[i]] %>
 
         <% if (myServices) { %>
 
-        <h2 class="service-organisation"><%= myServices[0].organisation.name %></h2>
-        <ul class="service-list service-list-pending">
-            <% for (let s = 0; s < myServices.length; s++) { %>
+        <h4 class="heading-small spacer-heading"><%= myServices[0].organisation.name %></h4>
 
+        <ul class="list-table">
+            <% for (let s = 0; s < myServices.length; s++) { %>
             <li>
-                <a href="#" class="under-construction">
-                    <h3>
-                        <span class="service-title"><%= myServices[s].name %></span>
-                        <span class="role-name"><%= myServices[s].role.name %></span>
-                    </h3>
-                    <span class="service-description"><%= myServices[s].description %></span>
-                </a>
+                <p><%= myServices[s].name %></p>
+                <span class="meta">Request sent on 30th October 2017</span>
             </li>
-            <% if (myServices[s].role.id >= 1) { %>
-            <li class="manage-service">
-                <a href="/organisations/<%=myServices[s].organisation.id%>/services/<%=myServices[s].id%>">Manage this service</a>
-            </li>
-            <% } %>
             <% } %>
         </ul>
         <%  } %>
@@ -91,6 +84,7 @@
 
 <style>
 
+    /*
     .service-list li a {
         text-decoration: none;
     }
@@ -134,6 +128,7 @@
         border-left-color: #a83632;
     }
 
+*/
 
 
 </style>
