@@ -16,7 +16,7 @@
         <% for (let i = 0; i < locals.myOrganisations.length; i++) { %>
         <% const myServices = locals.myServicesByOrganisations[locals.myOrganisations[i]] %>
         <% if (myServices) { %>
-        <h2 class="service-organisation"><%= myServices[0].organisation.name %></h2>
+        <h2 class="service-organisation heading-small spacer-heading"><%= myServices[0].organisation.name %></h2>
         <ul class="service-list">
             <% for (let s = 0; s < myServices.length; s++) { %>
                 <li>
