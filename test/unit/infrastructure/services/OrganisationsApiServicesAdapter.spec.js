@@ -194,23 +194,22 @@ describe('when getting requests for approval', () => {
   });
 
   it('then the request is retrieved from the organisations API', async () => {
-    await adapter.getUserServiceRequest('userServiceRequest1');
+    await adapter.getUserServiceRequest('org1', 'service1', 'user1');
 
     expect(rp.mock.calls.length).toBe(1);
-    expect(rp.mock.calls[0][0].uri).toBe('http://orgs.api.test/services/userServiceRequest1/request');
+    expect(rp.mock.calls[0][0].uri).toBe('http://orgs.api.test/organisations/org1/services/service1/request/user1');
   });
   it('then the bearer token for authorization is included', async () => {
-    await adapter.getUserServiceRequest('userServiceRequest1');
+    await adapter.getUserServiceRequest('org1', 'service1', 'user1');
 
     expect(rp.mock.calls[0][0].headers).not.toBeNull();
     expect(rp.mock.calls[0][0].headers.authorization).toBe('Bearer token');
   });
   it('then the result is mapped to a user service request', async () => {
-    const actual = await adapter.getUserServiceRequest('userServiceRequest1');
+    const actual = await adapter.getUserServiceRequest('org1', 'service1', 'user1');
 
     expect(actual).not.toBeNull();
-    expect(actual.userService.status).toBe(0);
-    expect(actual.userService.id).toBe('123-afd');
+    expect(actual.service.name).toBe('user');
     expect(actual.role.name).toBe('End User');
   });
 });
