@@ -1,6 +1,6 @@
 class UserServiceRequest {
-  constructor({ userService, organisation, service, role }) {
-    this.userService = userService;
+  constructor({ userId, organisation, service, role }) {
+    this.userId = userId;
     this.organisation = organisation;
     this.service = service;
     this.role = role;

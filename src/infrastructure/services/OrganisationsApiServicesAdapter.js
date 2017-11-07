@@ -56,10 +56,10 @@ const getServiceUsers = async (organisationId, serviceId, userId) => {
   return users.map(item => new ServiceUser(item));
 };
 
-const getUserServiceRequest = async (userServiceId) => {
+const getUserServiceRequest = async (organisationId, serviceId, userId) => {
   const token = await jwtStrategy(config.organisations.service).getBearerToken();
   const userServiceRequest = await rp({
-    uri: `${config.organisations.service.url}/services/${userServiceId}/request`,
+    uri: `${config.organisations.service.url}/organisations/${organisationId}/services/${serviceId}/request/${userId}`,
     headers: {
       authorization: `Bearer ${token}`,
     },

@@ -10,11 +10,7 @@ const terms = require('./../terms');
 const signOut = require('./../signOut');
 const services = require('./../services');
 const manageServices = require('./../manageServices');
-<<<<<<< HEAD
-const serviceRequest = require('./../serviceRequest');
-=======
 const { setUserContext } = require('../../infrastructure/utils');
->>>>>>> 480992aa363b902ffbc4e10d737c3ca580b2015b
 
 const config = require('./../../infrastructure/config')();
 
@@ -26,13 +22,8 @@ const routes = (app, csrf) => {
   app.use('/help', help(csrf));
   app.use('/terms', terms(csrf));
   app.use('/signout', signOut(csrf));
-<<<<<<< HEAD
-  app.use('/services', services(csrf), manageServices(csrf));
-  app.use('/services', serviceRequest(csrf));
-=======
   app.use('/services', services(csrf));
   app.use('/organisations', manageServices(csrf));
->>>>>>> 480992aa363b902ffbc4e10d737c3ca580b2015b
   if(config.hostingEnvironment.showDevViews === 'true') app.use('/dev',devRoutes(csrf, listEndpoints(app)));
 };
 
