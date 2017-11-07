@@ -6,6 +6,7 @@ const config = require('./../config')();
 const rp = require('request-promise');
 
 const ServiceUser = require('./ServiceUser');
+const UserServiceRequest = require('./UserServiceRequest');
 
 const getServicesForUser = async (userId) => {
   const token = await jwtStrategy(config.organisations.service).getBearerToken();
@@ -55,9 +56,23 @@ const getServiceUsers = async (organisationId, serviceId, userId) => {
   return users.map(item => new ServiceUser(item));
 };
 
+const getUserServiceRequest = async (organisationId, serviceId, userId) => {
+  const token = await jwtStrategy(config.organisations.service).getBearerToken();
+  const userServiceRequest = await rp({
+    uri: `${config.organisations.service.url}/organisations/${organisationId}/services/${serviceId}/request/${userId}`,
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+    json: true,
+  });
+
+  return new UserServiceRequest(userServiceRequest);
+};
+
 module.exports = {
   getServicesForUser,
   getAvailableServicesForUser,
   getServiceDetails,
   getServiceUsers,
+  getUserServiceRequest,
 };
