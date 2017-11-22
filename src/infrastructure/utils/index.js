@@ -12,7 +12,7 @@ const isLoggedIn = (req, res, next) => {
   return res.status(302).redirect(`/auth`);
 };
 
-const setApproverContext =  async (req, res, next) =>{
+const setApproverContext = async (req, res, next) =>{
   res.locals.isApprover = false;
   if (req.user) {
     const user = req.user;
