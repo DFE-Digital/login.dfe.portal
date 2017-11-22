@@ -4,6 +4,9 @@ jest.mock('./../../../../src/infrastructure/config', () => {
       directories: {
         type: 'static',
       },
+      organisations: {
+        type: 'static',
+      }
     };
   };
 });

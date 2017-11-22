@@ -28,11 +28,6 @@
                     <span class="service-description"><%= myServices[s].description %></span>
                 </a>
             </li>
-            <% if (myServices[s].role.id >= 1) { %>
-            <li class="manage-service">
-                <a href="/organisations/<%= myServices[s].organisation.id %>/services/<%= myServices[s].id %>">Manage this service</a>
-            </li>
-            <% } %>
             <% } %>
         </ul>
         <% } %>
