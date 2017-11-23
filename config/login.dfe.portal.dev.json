@@ -4,7 +4,7 @@
       "enabled": false,
       "host": "127.0.0.1",
       "port": 6379,
-      "auth": null
+      "auth": ""
     },
     "logLevel": "warn",
     "colors": {
@@ -15,7 +15,7 @@
     }
   },
   "hostingEnvironment": {
-    "showDevViews": "true",
+    "useDevViews": true,
     "env": "dev",
     "host": "localhost",
     "port": 4101,

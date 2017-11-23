@@ -14,8 +14,11 @@ const getPassportStrategy = require('./infrastructure/oidc');
 const logger = require('./infrastructure/logger');
 const setupAppRoutes = require('./app/routes');
 const startServer = require('./server');
+const { portalSchema, validateConfigAndQuitOnError } = require('login.dfe.config.schema');
 
 init = async () => {
+  validateConfigAndQuitOnError(portalSchema, config, logger);
+
   // setup passport middleware
   passport.use('oidc', await getPassportStrategy());
   passport.serializeUser(function (user, done) {
@@ -27,7 +30,7 @@ init = async () => {
   const csrf = csurf({ cookie: true });
   const app = express();
   // setup access logging (Morgan)
-  app.use(morgan('combined', {stream: fs.createWriteStream('./access.log', {flags: 'a'})}));
+  app.use(morgan('combined', { stream: fs.createWriteStream('./access.log', { flags: 'a' }) }));
   app.use(morgan('dev'));
 
   // Setup session params
@@ -62,15 +65,18 @@ init = async () => {
   });
 
 
-
   // auth callbacks
   app.get('/auth', passport.authenticate('oidc'));
   app.get('/auth/cb', (req, res, next) => {
     passport.authenticate('oidc', (err, user, info) => {
       let redirectUrl = '/';
 
-      if (err) { return next(err); }
-      if (!user) { return res.redirect('/'); }
+      if (err) {
+        return next(err);
+      }
+      if (!user) {
+        return res.redirect('/');
+      }
 
       if (req.session.redirectUrl) {
         redirectUrl = req.session.redirectUrl;
@@ -78,7 +84,9 @@ init = async () => {
       }
 
       req.logIn(user, (err) => {
-        if (err) { return next(err); }
+        if (err) {
+          return next(err);
+        }
         if (redirectUrl.endsWith('signout/complete')) redirectUrl = '/';
         res.redirect(redirectUrl);
       });
