@@ -1,10 +1,11 @@
 'use strict';
 
 const express = require('express');
-const {isLoggedIn} = require('../../infrastructure/utils');
+const { isLoggedIn } = require('../../infrastructure/utils');
 const logger = require('../../infrastructure/logger');
 const signOutUser = require('./signOut');
 const complete = require('./complete');
+
 const router = express.Router({ mergeParams: true });
 
 const signout = () => {

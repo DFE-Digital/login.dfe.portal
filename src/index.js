@@ -21,10 +21,10 @@ init = async () => {
 
   // setup passport middleware
   passport.use('oidc', await getPassportStrategy());
-  passport.serializeUser(function (user, done) {
+  passport.serializeUser((user, done) => {
     done(null, user);
   });
-  passport.deserializeUser(function (user, done) {
+  passport.deserializeUser((user, done) => {
     done(null, user);
   });
   const csrf = csurf({ cookie: true });
@@ -37,7 +37,7 @@ init = async () => {
   app.use(session({
     resave: true,
     saveUninitialized: true,
-    secret: config.hostingEnvironment.sessionSecret
+    secret: config.hostingEnvironment.sessionSecret,
   }));
 
   // use middleware
@@ -90,7 +90,7 @@ init = async () => {
         if (redirectUrl.endsWith('signout/complete')) redirectUrl = '/';
         res.redirect(redirectUrl);
       });
-    })(req, res, next)
+    })(req, res, next);
   });
 
   // Start an http or https server
@@ -99,7 +99,7 @@ init = async () => {
   return app;
 };
 
-const app = init().catch((err => {
+const app = init().catch(((err) => {
   logger.error(err);
 }));
 

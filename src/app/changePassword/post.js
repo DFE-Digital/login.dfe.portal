@@ -1,7 +1,7 @@
-const {getUserEmail} = require('./../../infrastructure/utils');
+const { getUserEmail } = require('./../../infrastructure/utils');
 const Account = require('./../../infrastructure/account');
 const logger = require('./../../infrastructure/logger');
-const {passwordPolicy} = require('login.dfe.validation');
+const { passwordPolicy } = require('login.dfe.validation');
 
 const validate = (oldPassword, newPassword, confirmPassword) => {
   const messages = {
@@ -19,8 +19,7 @@ const validate = (oldPassword, newPassword, confirmPassword) => {
   if (!newPassword) {
     messages.newPassword = 'Enter a new password';
     failed = true;
-  }
-  else {
+  } else {
     if (!passwordPolicy.doesPasswordMeetPolicy(newPassword)) {
       messages.newPassword = 'Your password does not meet the minimum requirements';
       failed = true;
@@ -52,7 +51,7 @@ const action = async (req, res) => {
     res.render('changePassword/views/change', {
       csrfToken: req.csrfToken(),
       validationFailed: true,
-        title: 'Change password',
+      title: 'Change password',
       validationMessages: validationResult.messages,
     });
     return;
@@ -70,7 +69,7 @@ const action = async (req, res) => {
     res.render('changePassword/views/change', {
       csrfToken: req.csrfToken(),
       validationFailed: true,
-        title: 'Change password',
+      title: 'Change password',
       validationMessages: {
         oldPassword: 'We do not recognise the password you entered. Please check and try again.',
         newPassword: '',

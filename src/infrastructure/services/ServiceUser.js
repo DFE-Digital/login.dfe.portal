@@ -6,7 +6,6 @@ class ServiceUser {
     this.status = status;
     this.organisation = organisation;
   }
-
 }
 
 module.exports = ServiceUser;

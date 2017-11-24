@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const Service = require('./Service');
 const jwtStrategy = require('login.dfe.jwt-strategies');
