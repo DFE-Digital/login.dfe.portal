@@ -1,5 +1,16 @@
 const { mockRequest, mockResponse } = require('./../../../utils/jestMocks');
-
+jest.mock('./../../../../src/infrastructure/config', () => {
+  return () => {
+    return {
+      directories: {
+        type: 'static',
+      },
+      organisations: {
+        type: 'static',
+      }
+    };
+  };
+});
 jest.mock('./../../../../src/infrastructure/config');
 jest.mock('./../../../../src/infrastructure/utils');
 
@@ -11,12 +22,7 @@ describe('when displaying the home page', () => {
   let home;
 
   beforeEach(() => {
-    const config = require('./../../../../src/infrastructure/config');
-    config.mockImplementation(() => ({
-      organisations: {
-        type: 'static',
-      },
-    }));
+
 
     req = mockRequest();
     req.user = {
@@ -47,15 +53,15 @@ describe('when displaying the home page', () => {
     expect(res.render.mock.calls[0][0]).toBe('home/views/home');
   });
 
-  it.skip('then it should include the users display name', async () => {
-    await home(req, res);
-
-    expect(res.render.mock.calls[0][1].displayName).toBe('User One');
-  });
-
-  it.skip('then it should include the full user', async () => {
-    await home(req, res);
-
-    expect(res.render.mock.calls[0][1].user).toBe(req.user);
-  });
+  // it.skip('then it should include the users display name', async () => {
+  //   await home(req, res);
+  //
+  //   expect(res.render.mock.calls[0][1].displayName).toBe('User One');
+  // });
+  //
+  // it.skip('then it should include the full user', async () => {
+  //   await home(req, res);
+  //
+  //   expect(res.render.mock.calls[0][1].user).toBe(req.user);
+  // });
 });
