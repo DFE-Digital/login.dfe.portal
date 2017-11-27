@@ -7,7 +7,7 @@ const action = (req, res) => {
       oldPassword: '',
       newPassword: '',
       confirmPassword: '',
-    }
+    },
   });
 };
 

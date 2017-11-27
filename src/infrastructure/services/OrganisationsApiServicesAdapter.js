@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const Service = require('./Service');
 const jwtStrategy = require('login.dfe.jwt-strategies');
@@ -44,7 +44,7 @@ const getServiceDetails = async (organisationId, serviceId) => {
   return new Service(service);
 };
 
-const getServiceUsers = async (organisationId, serviceId, userId) => {
+const getServiceUsers = async (organisationId, serviceId) => {
   const token = await jwtStrategy(config.organisations.service).getBearerToken();
   const users = await rp({
     uri: `${config.organisations.service.url}/organisations/${organisationId}/services/${serviceId}/users`,

@@ -5,14 +5,14 @@ const { getServicesForUser } = require('../../infrastructure/services/index');
 const APPROVER = 10000;
 
 const isLoggedIn = (req, res, next) => {
-  if(req.isAuthenticated()) {
+  if (req.isAuthenticated()) {
     return next();
   }
   req.session.redirectUrl = req.originalUrl;
-  return res.status(302).redirect(`/auth`);
+  return res.status(302).redirect('/auth');
 };
 
-const setApproverContext = async (req, res, next) =>{
+const setApproverContext = async (req, res, next) => {
   res.locals.isApprover = false;
   if (req.user) {
     const user = req.user;
@@ -22,20 +22,16 @@ const setApproverContext = async (req, res, next) =>{
   next();
 };
 
-const getUserEmail = (user) => {
-  return user.email || '';
-};
+const getUserEmail = user => user.email || '';
 
-const getUserDisplayName = (user) => {
-  return `${user.given_name || ''} ${user.family_name || ''}`.trim();
-};
+const getUserDisplayName = user => `${user.given_name || ''} ${user.family_name || ''}`.trim();
 
-const setUserContext = (req, res, next)=> {
+const setUserContext = (req, res, next) => {
   if (req.user) {
     res.locals.user = req.user;
-    res.locals.displayName = getUserDisplayName(req.user)
+    res.locals.displayName = getUserDisplayName(req.user);
   }
-  next()
+  next();
 };
 
 const asyncMiddleware = fn =>
@@ -44,4 +40,4 @@ const asyncMiddleware = fn =>
       .catch(next);
   };
 
-module.exports = {isLoggedIn, getUserEmail, getUserDisplayName, setUserContext, setApproverContext, asyncMiddleware};
+module.exports = { isLoggedIn, getUserEmail, getUserDisplayName, setUserContext, setApproverContext, asyncMiddleware };

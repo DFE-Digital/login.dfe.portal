@@ -1,5 +1,6 @@
 'use strict';
-const listEndpoints = require('express-list-endpoints')
+
+const listEndpoints = require('express-list-endpoints');
 
 const devRoutes = require('./../devLauncher');
 const userProfile = require('./../profile');
@@ -26,7 +27,7 @@ const routes = (app, csrf) => {
   app.use('/services', services(csrf));
   app.use('/organisations', manageServices(csrf));
   app.use('/users', manageUsers(csrf));
-  if(config.hostingEnvironment.showDevViews === 'true') app.use('/dev',devRoutes(csrf, listEndpoints(app)));
+  if (config.hostingEnvironment.showDevViews === 'true') app.use('/dev', devRoutes(csrf, listEndpoints(app)));
 };
 
 module.exports = routes;
