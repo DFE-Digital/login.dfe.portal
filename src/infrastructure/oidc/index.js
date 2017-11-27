@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 const config = require('../config')();
 const { Strategy, Issuer } = require('openid-client');
 const logger = require('../logger');

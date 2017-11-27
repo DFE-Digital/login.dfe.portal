@@ -1,12 +1,15 @@
 'use strict';
 
+/* eslint-disable no-param-reassign */
+
+const https = require('https');
 
 const startServer = (app, config, logger) => {
 // Setup server
   if (config.hostingEnvironment.env === 'dev') {
     app.proxy = true;
 
-    const https = require('https');
+
     const options = {
       key: config.hostingEnvironment.sslKey,
       cert: config.hostingEnvironment.sslCert,

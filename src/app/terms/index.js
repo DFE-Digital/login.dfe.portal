@@ -6,7 +6,7 @@ const getIndex = require('./terms');
 
 const router = express.Router({ mergeParams: true });
 
-const terms = (csrf) => {
+const terms = () => {
   logger.info('Mounting terms route');
 
   router.get('/', getIndex);

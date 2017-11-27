@@ -16,7 +16,7 @@ const setupAppRoutes = require('./app/routes');
 const startServer = require('./server');
 const { portalSchema, validateConfigAndQuitOnError } = require('login.dfe.config.schema');
 
-init = async () => {
+const init = async () => {
   validateConfigAndQuitOnError(portalSchema, config, logger);
 
   // setup passport middleware
@@ -68,7 +68,7 @@ init = async () => {
   // auth callbacks
   app.get('/auth', passport.authenticate('oidc'));
   app.get('/auth/cb', (req, res, next) => {
-    passport.authenticate('oidc', (err, user, info) => {
+    passport.authenticate('oidc', (err, user) => {
       let redirectUrl = '/';
 
       if (err) {
@@ -83,12 +83,12 @@ init = async () => {
         req.session.redirectUrl = null;
       }
 
-      req.logIn(user, (err) => {
-        if (err) {
-          return next(err);
+      return req.logIn(user, (loginErr) => {
+        if (loginErr) {
+          return next(loginErr);
         }
         if (redirectUrl.endsWith('signout/complete')) redirectUrl = '/';
-        res.redirect(redirectUrl);
+        return res.redirect(redirectUrl);
       });
     })(req, res, next);
   });

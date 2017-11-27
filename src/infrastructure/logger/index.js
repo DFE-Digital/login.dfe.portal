@@ -1,5 +1,6 @@
 'use strict';
 
+/* eslint-disable no-unused-expressions */
 require('winston-redis').Redis;
 const winston = require('winston');
 const config = require('../config/index')();

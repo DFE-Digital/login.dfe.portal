@@ -1,4 +1,3 @@
-const { getUserEmail } = require('./../../infrastructure/utils');
 const Account = require('./../../infrastructure/account');
 const logger = require('./../../infrastructure/logger');
 const { passwordPolicy } = require('login.dfe.validation');

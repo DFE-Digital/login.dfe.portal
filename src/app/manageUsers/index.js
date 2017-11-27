@@ -9,7 +9,7 @@ const manageUsers = require('./manageUsers');
 const router = express.Router({ mergeParams: true });
 
 
-const routes = (csrf) => {
+const routes = () => {
   logger.info('Mounting \'manage users\' routes');
   router.use(isLoggedIn);
 
