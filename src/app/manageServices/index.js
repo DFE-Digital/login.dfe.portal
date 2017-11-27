@@ -2,13 +2,14 @@
 
 
 const express = require('express');
-const {isLoggedIn} = require('../../infrastructure/utils');
+const { isLoggedIn } = require('../../infrastructure/utils');
 const logger = require('../../infrastructure/logger');
 const viewService = require('./viewService');
+
 const router = express.Router({ mergeParams: true });
 const getUserServiceRequest = require('../manageServices/getUserServiceRequest');
 
-const routes = (csrf) => {
+const routes = () => {
   logger.info('Mounting \'manage services\' routes');
 
   router.use(isLoggedIn);

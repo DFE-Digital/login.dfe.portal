@@ -5,7 +5,6 @@ class UserServiceRequest {
     this.service = service;
     this.role = role;
   }
-
 }
 
 module.exports = UserServiceRequest;
