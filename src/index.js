@@ -14,27 +14,30 @@ const getPassportStrategy = require('./infrastructure/oidc');
 const logger = require('./infrastructure/logger');
 const setupAppRoutes = require('./app/routes');
 const startServer = require('./server');
+const { portalSchema, validateConfigAndQuitOnError } = require('login.dfe.config.schema');
 
-init = async () => {
+const init = async () => {
+  validateConfigAndQuitOnError(portalSchema, config, logger);
+
   // setup passport middleware
   passport.use('oidc', await getPassportStrategy());
-  passport.serializeUser(function (user, done) {
+  passport.serializeUser((user, done) => {
     done(null, user);
   });
-  passport.deserializeUser(function (user, done) {
+  passport.deserializeUser((user, done) => {
     done(null, user);
   });
   const csrf = csurf({ cookie: true });
   const app = express();
   // setup access logging (Morgan)
-  app.use(morgan('combined', {stream: fs.createWriteStream('./access.log', {flags: 'a'})}));
+  app.use(morgan('combined', { stream: fs.createWriteStream('./access.log', { flags: 'a' }) }));
   app.use(morgan('dev'));
 
   // Setup session params
   app.use(session({
     resave: true,
     saveUninitialized: true,
-    secret: config.hostingEnvironment.sessionSecret
+    secret: config.hostingEnvironment.sessionSecret,
   }));
 
   // use middleware
@@ -62,27 +65,32 @@ init = async () => {
   });
 
 
-
   // auth callbacks
   app.get('/auth', passport.authenticate('oidc'));
   app.get('/auth/cb', (req, res, next) => {
-    passport.authenticate('oidc', (err, user, info) => {
+    passport.authenticate('oidc', (err, user) => {
       let redirectUrl = '/';
 
-      if (err) { return next(err); }
-      if (!user) { return res.redirect('/'); }
+      if (err) {
+        return next(err);
+      }
+      if (!user) {
+        return res.redirect('/');
+      }
 
       if (req.session.redirectUrl) {
         redirectUrl = req.session.redirectUrl;
         req.session.redirectUrl = null;
       }
 
-      req.logIn(user, (err) => {
-        if (err) { return next(err); }
+      return req.logIn(user, (loginErr) => {
+        if (loginErr) {
+          return next(loginErr);
+        }
         if (redirectUrl.endsWith('signout/complete')) redirectUrl = '/';
-        res.redirect(redirectUrl);
+        return res.redirect(redirectUrl);
       });
-    })(req, res, next)
+    })(req, res, next);
   });
 
   // Start an http or https server
@@ -91,7 +99,7 @@ init = async () => {
   return app;
 };
 
-const app = init().catch((err => {
+const app = init().catch(((err) => {
   logger.error(err);
 }));
 

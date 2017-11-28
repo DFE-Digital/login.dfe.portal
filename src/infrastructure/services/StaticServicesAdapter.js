@@ -3,7 +3,6 @@
 const Service = require('./Service');
 const Role = require('./Role');
 const Organisation = require('./Organisation');
-const UserService = require('./UserServices');
 const ServiceUser = require('./ServiceUser');
 
 const services = [
@@ -44,7 +43,7 @@ const services = [
   }),
 ];
 
-const getAvailableServicesForUser = userId => Promise.resolve([
+const getAvailableServicesForUser = () => Promise.resolve([
   new Service({
     id: 'c3313ac0-669b-4016-9ca5-8b3d78f383c9',
     name: 'Budget Forecast Return',
@@ -61,7 +60,7 @@ const getAvailableServicesForUser = userId => Promise.resolve([
     description: 'Bonbon brownie tootsie roll chocolate jelly-o caramels icing tiramisu. Toffee cheesecake muffin dragée gummies topping chocolate dessert. Bear claw jelly apple pie.',
   }),
 ]);
-const getServicesForUser = userId =>
+const getServicesForUser = () =>
   Promise.resolve([
     new Service({
       id: '4d46ed12-c4a9-462b-8c33-f323e5f4c4f9',
@@ -120,7 +119,7 @@ const getServiceDetails = async (organisationId, serviceId) => {
   return Promise.resolve(service);
 };
 
-const getServiceUsers = async (organisationId, serviceId) => {
+const getServiceUsers = async () => {
   const organisation = new Organisation({
     id: 2,
     name: 'George Fentham Endowed Primary School',
@@ -134,7 +133,7 @@ const getServiceUsers = async (organisationId, serviceId) => {
     ]);
 };
 
-const getUserServiceRequest = async (organisationId, serviceId, userId) => {
+const getUserServiceRequest = async () => {
   const organisation = new Organisation({
     id: 2,
     name: 'George Fentham Endowed Primary School',

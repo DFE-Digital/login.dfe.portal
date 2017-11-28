@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express');
-const router = express.Router({ mergeParams: true });
+const router = express.Router({mergeParams: true});
 const {isLoggedIn} = require('../../infrastructure/utils');
 const logger = require('../../infrastructure/logger');
 const manageUsers = require('./manageUsers');
@@ -15,7 +15,7 @@ const rejectUnlessApprover = (req, res, next) => {
   return res.status(302).redirect(`/`);
 };
 
-const routes =  (csrf) => {
+const routes = () => {
   logger.info('Mounting \'manage users\' routes');
   router.use(isLoggedIn);
 

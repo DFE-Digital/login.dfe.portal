@@ -19,20 +19,20 @@ class Account {
     return name;
   }
 
-  static fromContext(user) {
+  static fromContext() {
     return null;
   }
 
-  static async getById(id) {
+  static async getById() {
     return Promise.resolve(null);
   }
 
 
-  async validatePassword(password) {
+  static async validatePassword() {
     return Promise.resolve(true);
   }
 
-  async setPassword(password) {
+  static async setPassword() {
     return Promise.resolve(null);
   }
 }

@@ -31,7 +31,7 @@
                     <% if (user.status === 1 ) { %>
                         <span class="badge badge-default">Approved</span>
                     <% } else { %>
-                    <a href="/organisation/<%= locals.serviceDetails.organisation.id %>/services/<%= locals.serviceDetails.id %>/service-request/<%= user.id%>">
+                    <a href="/organisations/<%= locals.serviceDetails.organisation.id %>/services/<%= locals.serviceDetails.id %>/service-request/<%= user.id%>">
                         <span class="badge badge-primary">Pending Approval</span>
                     </a>
                     <% } %>
