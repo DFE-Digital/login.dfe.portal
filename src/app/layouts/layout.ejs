@@ -74,6 +74,16 @@
 
 
     <main id="content" tabindex="-1">
+        <% if (locals.flash.info) { %>
+        <div class="notification notification-success">
+            <%=locals.flash.info%>
+        </div>
+        <% } %>
+        <% if (locals.flash.error) { %>
+        <div class="notification notification-error">
+            <%=locals.flash.error%>
+        </div>
+        <% } %>
         <%- body %>
     </main>
 
