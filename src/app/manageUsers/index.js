@@ -15,7 +15,7 @@ const rejectUnlessApprover = (req, res, next) => {
   return res.status(302).redirect(`/`);
 };
 
-const routes = () => {
+const routes = (csrf) => {
   logger.info('Mounting \'manage users\' routes');
   router.use(isLoggedIn);
 
