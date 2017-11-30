@@ -26,20 +26,43 @@
                     <span class="role-name"><%= myServices[s].role.name %></span>
                 </div>
                 <div class="more-information">
-                    <a href="#modal-service-<%=s+1%>" class="modal-link">More information <span class="vh">about <%= myServices[s].name %></span> </a>
+                    <a href="#modal-service-<%=i+1%>-<%=s+1%>" class="modal-link">More information <span class="vh">about <%= myServices[s].name %></span> </a>
                 </div>
-                <div class="modal" id="modal-service-<%=s+1%>">
+                <div class="modal" id="modal-service-<%=i+1%>-<%=s+1%>">
                     <a href="#" class="close">Close</a>
-                    <h3 class="heading-small"><%= myServices[s].name %></h3>
+                    <h3 class="heading-large"><%= myServices[s].name %></h3>
                     <dl class="rows condensed">
+
                         <dt>Organisation</dt>
                         <dd><%= myServices[0].organisation.name %></dd>
+
+                        <dt>Access level</dt>
+                        <dd><%= myServices[0].role.name %></dd>
+
+
                         <dt>Description</dt>
-                        <dd><%= myServices[s].description %></dd>
+                        <dd><%= myServices[s].description ? myServices[s].description : '---'%></dd>
+
                         <% if (myServices[s].status === 1) { %>
+
                         <dt>Last accessed</dt>
-                        <dd>29/11/2017 at 13:07</dd>
+                        <dd>{{ LAST ACCESSED DATETIME }}</dd>
+
+                        <% } else { %>
+
+                        <dt>Request sent on</dt>
+                        <dd>{{ REQUEST SENT DATE }}</dd>
+
+                        <dt>Request sent to</dt>
+                        <dd>
+                            <ul>
+                                <li>{{ APPROVER 1 NAME AND EMAIL }}</li>
+                                <li>{{ APPROVER 2 NAME AND EMAIL }}</li>
+                            </ul>
+                        </dd>
+
                         <% } %>
+
                     </dl>
                 </div>
             </li>
