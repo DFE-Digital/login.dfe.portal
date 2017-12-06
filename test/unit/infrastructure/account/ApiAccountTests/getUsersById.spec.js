@@ -13,7 +13,6 @@ describe('When getting a collection of users', () => {
     const config = require('./../../../../../src/infrastructure/config');
     config.mockImplementation(() => ({
       directories: {
-        directoryId: 'directory1',
         service: {
           url: 'http://unit.test.local',
         },
