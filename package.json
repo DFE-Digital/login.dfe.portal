@@ -35,6 +35,7 @@
     "login.dfe.jwt-strategies": "github:DFE-Digital/login.dfe.jwt-strategies#v1.0.4",
     "login.dfe.validation": "github:DFE-Digital/login.dfe.validation#v1.0.0",
     "mocha": "latest",
+    "moment": "^2.19.3",
     "morgan": "^1.9.0",
     "openid-client": "^1.18.1",
     "passport": "^0.4.0",
