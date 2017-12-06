@@ -45,19 +45,21 @@
 
                         <% if (myServices[s].status === 1) { %>
 
-                        <dt>Last accessed</dt>
-                        <dd>{{ LAST ACCESSED DATETIME }}</dd>
+                        <!--<dt>Last accessed</dt>-->
+                        <!--<dd>{{ LAST ACCESSED DATETIME }}</dd>-->
 
                         <% } else { %>
 
-                        <dt>Request sent on</dt>
-                        <dd>{{ REQUEST SENT DATE }}</dd>
-
+                        <dt>Request sent</dt>
+                        <dd><%= locals.moment(myServices[s].requestDate).fromNow()%></dd>
                         <dt>Request sent to</dt>
                         <dd>
                             <ul>
-                                <li>{{ APPROVER 1 NAME AND EMAIL }}</li>
-                                <li>{{ APPROVER 2 NAME AND EMAIL }}</li>
+                                <% for (let j = 0; j < myServices[s].myApproversForService.length; j++) {
+                                const approver = myServices[s].myApproversForService[j];
+                                %>
+                                    <li><%=approver.given_name%> <%=approver.family_name%>  <a href="mailto:<%=approver.email%>"><%=approver.email%></a></li>
+                                <% } %>
                             </ul>
                         </dd>
 
