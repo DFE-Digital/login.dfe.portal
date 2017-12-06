@@ -39,7 +39,7 @@ describe('When setting a users password', () => {
 
     expect(rp.mock.calls).toHaveLength(1);
     expect(rp.mock.calls[0][0].method).toBe('POST');
-    expect(rp.mock.calls[0][0].uri).toBe('http://unit.test.local/user/user1/changepassword');
+    expect(rp.mock.calls[0][0].uri).toBe('http://unit.test.local/users/user1/changepassword');
     expect(rp.mock.calls[0][0].body).toMatchObject({
       password,
     });

@@ -39,7 +39,7 @@ describe('When validating a users password', () => {
 
     expect(rp.mock.calls).toHaveLength(1);
     expect(rp.mock.calls[0][0].method).toBe('POST');
-    expect(rp.mock.calls[0][0].uri).toBe('http://unit.test.local/user/authenticate');
+    expect(rp.mock.calls[0][0].uri).toBe('http://unit.test.local/users/authenticate');
     expect(rp.mock.calls[0][0].body).toMatchObject({
       username: user.email,
       password,
