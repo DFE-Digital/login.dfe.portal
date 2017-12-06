@@ -2,7 +2,11 @@
 
 const handler = (req, res) => {
   const viewModel = {
-    csrfToken: req.csrfToken()
+    csrfToken: req.csrfToken(),
+    validationFailed: false,
+    validationMessages: {
+      email: '',
+    },
   };
   res.render('manageUsers/views/newUser', viewModel);
 };

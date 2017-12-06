@@ -6,6 +6,7 @@ const {isLoggedIn} = require('../../infrastructure/utils');
 const logger = require('../../infrastructure/logger');
 const manageUsers = require('./manageUsers');
 const newUser = require('./newUser');
+const postNewUser = require('./postNewUser');
 
 const rejectUnlessApprover = (req, res, next) => {
   if (res.locals.isApprover) {
@@ -23,6 +24,7 @@ const routes = (csrf) => {
 
   router.get('/', manageUsers);
   router.get('/new', csrf, newUser);
+  router.post('/new', csrf, postNewUser);
 
   return router;
 };
