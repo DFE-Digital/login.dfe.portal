@@ -52,6 +52,7 @@
 
                         <dt>Request sent</dt>
                         <dd><%= locals.moment(myServices[s].requestDate).fromNow()%></dd>
+                        <%if(myServices[s].myApproversForService && myServices[s].myApproversForService.length !== 0) {%>
                         <dt>Request sent to</dt>
                         <dd>
                             <ul>
@@ -62,7 +63,7 @@
                                 <% } %>
                             </ul>
                         </dd>
-
+                        <% } %>
                         <% } %>
 
                     </dl>
