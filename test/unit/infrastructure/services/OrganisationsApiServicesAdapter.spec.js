@@ -3,24 +3,16 @@ const Service = require('./../../../../src/infrastructure/services/Service');
 const ServiceUser = require('./../../../../src/infrastructure/services/ServiceUser');
 
 jest.mock('request-promise');
-jest.mock('login.dfe.jwt-strategies', () => {
-  return () => {
-    return {
-      getBearerToken: () => 'token',
-    };
-  };
-});
-jest.mock('./../../../../src/infrastructure/config', () => {
-  return () => {
-    return {
-      organisations: {
-        service: {
-          url: 'http://orgs.api.test',
-        },
-      },
-    };
-  };
-});
+jest.mock('login.dfe.jwt-strategies', () => () => ({
+  getBearerToken: () => 'token',
+}));
+jest.mock('./../../../../src/infrastructure/config', () => () => ({
+  organisations: {
+    service: {
+      url: 'http://orgs.api.test',
+    },
+  },
+}));
 
 const adapter = require('./../../../../src/infrastructure/services/OrganisationsApiServicesAdapter');
 
@@ -46,7 +38,7 @@ describe('when getting available services for a user', () => {
   it('then it should query organisations api', async () => {
     await adapter.getAvailableServicesForUser('user1');
 
-    expect(rp.mock.calls.length).toBe(1);
+    expect(rp.mock.calls).toHaveLength(1);
     expect(rp.mock.calls[0][0].uri).toBe('http://orgs.api.test/services/unassociated-with-user/user1');
   });
 
@@ -62,7 +54,7 @@ describe('when getting available services for a user', () => {
 
     expect(actual).not.toBeNull();
     expect(actual).toBeInstanceOf(Array);
-    expect(actual.length).toBe(1);
+    expect(actual).toHaveLength(1);
     expect(actual[0]).toBeInstanceOf(Service);
     expect(actual[0].id).toBe('service1');
     expect(actual[0].name).toBe('Service One');
@@ -92,7 +84,7 @@ describe('when getting service details', () => {
   it('then it should query organisations api', async () => {
     await adapter.getServiceDetails('org1', 'service1');
 
-    expect(rp.mock.calls.length).toBe(1);
+    expect(rp.mock.calls).toHaveLength(1);
     expect(rp.mock.calls[0][0].uri).toBe('http://orgs.api.test/organisations/org1/services/service1');
   });
 
@@ -139,7 +131,7 @@ describe('when getting service users', () => {
   it('then it should query organisations api', async () => {
     await adapter.getServiceUsers('org1', 'service1');
 
-    expect(rp.mock.calls.length).toBe(1);
+    expect(rp.mock.calls).toHaveLength(1);
     expect(rp.mock.calls[0][0].uri).toBe('http://orgs.api.test/organisations/org1/services/service1/users');
   });
 
@@ -155,7 +147,7 @@ describe('when getting service users', () => {
 
     expect(actual).not.toBeNull();
     expect(actual).toBeInstanceOf(Array);
-    expect(actual.length).toBe(1);
+    expect(actual).toHaveLength(1);
     expect(actual[0].id).toBe('user1');
     expect(actual[0].name).toBe('User One');
     expect(actual[0].role.id).toBe(0);
@@ -196,7 +188,7 @@ describe('when getting requests for approval', () => {
   it('then the request is retrieved from the organisations API', async () => {
     await adapter.getUserServiceRequest('org1', 'service1', 'user1');
 
-    expect(rp.mock.calls.length).toBe(1);
+    expect(rp.mock.calls).toHaveLength(1);
     expect(rp.mock.calls[0][0].uri).toBe('http://orgs.api.test/organisations/org1/services/service1/request/user1');
   });
   it('then the bearer token for authorization is included', async () => {
@@ -211,5 +203,44 @@ describe('when getting requests for approval', () => {
     expect(actual).not.toBeNull();
     expect(actual.service.name).toBe('user');
     expect(actual.role.name).toBe('End User');
+  });
+});
+
+describe('when getting approvers of a service', () => {
+  let req;
+  let res;
+  let rp;
+
+  beforeEach(() => {
+    req = mockRequest();
+    res = mockResponse();
+
+    rp = require('request-promise');
+    rp.mockReturnValue(
+      [{
+        id: '123-afd',
+      }, {
+        id: '456-cdf',
+      }],
+    );
+  });
+  it('then the request is retrieved from the organisations API', async () => {
+    await adapter.getApproversForService('org1', 'service1');
+
+    expect(rp.mock.calls).toHaveLength(1);
+    expect(rp.mock.calls[0][0].uri).toBe('http://orgs.api.test/organisations/org1/services/service1/approvers');
+  });
+  it('then the bearer token for authorization is included', async () => {
+    await adapter.getApproversForService('org1', 'service1');
+
+    expect(rp.mock.calls[0][0].headers).not.toBeNull();
+    expect(rp.mock.calls[0][0].headers.authorization).toBe('Bearer token');
+  });
+  it('then the result is mapped to a user service request', async () => {
+    const actual = await adapter.getApproversForService('org1', 'service1');
+
+    expect(actual).not.toBeNull();
+    expect(actual[0].id).toBe('123-afd');
+    expect(actual[1].id).toBe('456-cdf');
   });
 });

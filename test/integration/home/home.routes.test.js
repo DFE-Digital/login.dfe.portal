@@ -2,6 +2,7 @@
 const path = require('path');
 const chai = require('chai');
 const request = require('supertest');
+const moment = require('moment');
 const {describe, it, beforeEach} = require('mocha');
 const {expect} = chai;
 const {expressAppWithViews, expressAuthenticationStub} = require('./../../utils');
@@ -14,11 +15,13 @@ describe('Integration tests for', () => {
       process.env.settings = `config/login.dfe.portal.dev.json`;
       app = expressAppWithViews(path.resolve(__dirname, '../../../', 'src/app/'));
       app.locals.title = 'Test Title';
+
     });
     describe('as an authenticated user', () => {
       beforeEach(() => {
         process.env.settings = `config/login.dfe.portal.dev.json`;
         app.use(expressAuthenticationStub(true, {user: {}}));
+        app.locals.moment = moment;
       });
 
       it('Get / should return status 200', async () => {

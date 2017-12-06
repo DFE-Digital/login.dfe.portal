@@ -27,12 +27,14 @@ class Account {
     return Promise.resolve(null);
   }
 
-
   static async validatePassword() {
     return Promise.resolve(true);
   }
 
   static async setPassword() {
+    return Promise.resolve(null);
+  }
+  static async getUsersById() {
     return Promise.resolve(null);
   }
 }
