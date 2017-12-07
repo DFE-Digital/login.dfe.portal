@@ -38,7 +38,7 @@ class DirectoriesApiAccount extends Account {
   }
 
   static async getById(id) {
-    const response = await callDirectoriesApi(`${config.directories.directoryId}/user/${id}`, null, 'GET');
+    const response = await callDirectoriesApi(`users/${id}`, null, 'GET');
     if (!response.success) {
       if (response.statusCode === 404) {
         return null;
@@ -50,7 +50,7 @@ class DirectoriesApiAccount extends Account {
 
   async validatePassword(password) {
     const username = this.claims.email;
-    const response = await callDirectoriesApi(`${config.directories.directoryId}/user/authenticate`, {
+    const response = await callDirectoriesApi('users/authenticate', {
       username,
       password,
     });
@@ -59,12 +59,23 @@ class DirectoriesApiAccount extends Account {
 
   async setPassword(password) {
     const uid = this.claims.sub;
-    const response = await callDirectoriesApi(`${config.directories.directoryId}/user/${uid}/changepassword`, {
+    const response = await callDirectoriesApi(`users/${uid}/changepassword`, {
       password,
     });
     if (!response.success) {
       throw new Error(response.errorMessage);
     }
+  }
+
+  async getUsersById(ids) {
+    const response = await callDirectoriesApi(`users/by-ids?id=${ids.toString()}`, null, 'GET');
+    if (!response.success) {
+      if (response.statusCode === 404) {
+        return null;
+      }
+      throw new Error(response.errorMessage);
+    }
+    return response.result;
   }
 }
 

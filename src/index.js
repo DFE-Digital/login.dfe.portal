@@ -6,6 +6,7 @@ const expressLayouts = require('express-ejs-layouts');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const moment = require('moment');
 const morgan = require('morgan');
 const csurf = require('csurf');
 const flash = require('express-flash-2');
@@ -59,6 +60,7 @@ const init = async () => {
 
   // Setup global locals for layouts and views
   Object.assign(app.locals, {
+    moment,
     app: {
       title: 'Login.Dfe',
     },
