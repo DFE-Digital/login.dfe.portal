@@ -8,11 +8,6 @@
             </span>
             <%= locals.displayName %>
         </h1>
-        <% if (locals.flash.info) { %>
-        <div class="notification notification-success">
-            <%=locals.flash.info%>
-        </div>
-        <% } %>
         <dl class="inline">
             <dt>First name</dt>
             <dd><%= locals.user.given_name%></dd>

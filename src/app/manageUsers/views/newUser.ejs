@@ -1,0 +1,28 @@
+<div class="grid-row">
+    <div class="col-12">
+        <h1 class="heading-xlarge">
+            Add new user
+        </h1>
+        <p class="lede">
+            Please provide the user's details below.
+        </p>
+    </div>
+</div>
+<div class="grid-row">
+    <div class="col-12">
+        <form method="POST" novalidate="novalidate">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
+            <div class="form-group <%= locals.validationMessages.email ? 'form-group-error' : '' %>">
+                <label class="form-label" for="email">User's email address</label>
+                <% if (locals.validationMessages.email) { %>
+                <p class="error-message" id="validation-email"><%=locals.validationMessages.email%></p>
+                <% } %>
+                <input class="form-control" type="email" name="email" id="email" required="required" data-label="Email address"  <% if (locals.validationMessages.email) { %> aria-invalid="true" aria-describedby="validation-email" <% } %>>
+            </div>
+            <div class="submit-buttons">
+                <input type="submit" class="button" value="Continue">
+                <a href="/users" class="button button-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
