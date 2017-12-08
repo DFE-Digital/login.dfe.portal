@@ -1,11 +1,7 @@
 'use strict';
 
 const path = require('path');
-const chai = require('chai');
 const request = require('supertest');
-const { describe, it, beforeEach } = require('mocha');
-
-const { expect } = chai;
 const { expressAppWithViews, expressAuthenticationStub } = require('./../../utils');
 
 let app;
@@ -27,7 +23,7 @@ describe('Integration tests for', () => {
         const profile = require('../../../src/app/profile/index');
         app.use('/', profile(null));
         const response = await request(app).get('/');
-        expect(response.statusCode).to.equal(200);
+        expect(response.statusCode).toBe(200);
       });
     });
     describe('as an unauthenticated user', () => {
@@ -40,7 +36,7 @@ describe('Integration tests for', () => {
         app.use('/', profile(null));
 
         const response = await request(app).get('/');
-        expect(response.statusCode).to.equal(302);
+        expect(response.statusCode).toBe(302);
       });
     });
   });
