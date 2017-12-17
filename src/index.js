@@ -16,9 +16,14 @@ const logger = require('./infrastructure/logger');
 const setupAppRoutes = require('./app/routes');
 const startServer = require('./server');
 const { portalSchema, validateConfigAndQuitOnError } = require('login.dfe.config.schema');
+const appInsights = require('applicationinsights');
 
 const init = async () => {
   validateConfigAndQuitOnError(portalSchema, config, logger);
+
+  if (config.hostingEnvironment.applicationInsights) {
+    appInsights.setup(config.hostingEnvironment.applicationInsights).start();
+  }
 
   // setup passport middleware
   passport.use('oidc', await getPassportStrategy());
